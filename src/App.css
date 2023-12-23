@@ -1,0 +1,58 @@
+/* Home Part and Navbar Part */
+
+.home-container {
+  background-color: #DF826C;
+  height: 635px;
+}
+
+.space-between-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 50px 0 50px;
+  color: white;
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.company-logo {
+  font-weight: 800;
+}
+
+.logo-name-black {
+  color: black;
+}
+
+.content-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.text-container {
+  padding: 20px 0 0 250px;
+  font-family: 'Titan One';
+  font-size: 60px;
+  color: white;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 10px;
+}
+
+.image-container {
+  position: relative;
+  padding-right: 250px;
+}
+
+
+/* Education Part */
+
+.education-container {
+  background-color: #3F3D56;
+  height: 700px;
+}
