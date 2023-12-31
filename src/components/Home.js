@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import "../App.css";
+import CollapsibleExample from "./Navbar";
+import HomeBody from "./HomeBody";
 
 class Home extends Component {
   render() {
     return (
       <div>
         <div className="home-container">
-          <div className="navbar">
+          {/* <div className="navbar">
               <div className="space-between-navbar">
               <span>LEARN</span>
               <span>NOTES</span>
@@ -20,9 +22,12 @@ class Home extends Component {
               <span>LOGIN</span>
               <button className="sign-up-button">SIGN UP</button>
             </div>
-          </div>
+          </div> */}
 
-          <div className="content-container">
+          <CollapsibleExample />
+          <HomeBody />
+
+          {/* <div className="content-container">
             <div className="text-container">
               <ul>
                 <li>Explore</li>
@@ -35,12 +40,10 @@ class Home extends Component {
             <div className="image-container">
               <img src="images/student_with_book.svg" alt="Student with book" />
             </div>
-          </div>
+          </div> */}
         </div>
 
-        <div className="education-container">
-        
-        </div>
+        <div className="education-container"></div>
       </div>
     );
   }
