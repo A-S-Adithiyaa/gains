@@ -4,10 +4,10 @@ import "../App.css";
 class Home extends Component {
   render() {
     return (
-      <>
+      <div>
         <div className="home-container">
           <div className="navbar">
-            <div className="space-between-navbar">
+              <div className="space-between-navbar">
               <span>LEARN</span>
               <span>NOTES</span>
               <span>ASSESSMENTS</span>
@@ -18,7 +18,7 @@ class Home extends Component {
 
               <span>QUESTIONS</span>
               <span>LOGIN</span>
-              <button>SIGN UP</button>
+              <button className="sign-up-button">SIGN UP</button>
             </div>
           </div>
 
@@ -41,7 +41,7 @@ class Home extends Component {
         <div className="education-container">
         
         </div>
-      </>
+      </div>
     );
   }
 }
