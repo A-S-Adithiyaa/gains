@@ -1,7 +1,7 @@
 import React from "react";
-import { Container, Row, Col, Card, Image } from "react-bootstrap";
+import { Container, Row, Col, Image } from "react-bootstrap";
 
-const EducationSection = () => {
+function EducationSection() {
   return (
     <Container>
       <Row>
@@ -14,16 +14,8 @@ const EducationSection = () => {
               fluid
             />
           </Row>
-          <Row className="education-text">
-            {/* <Col className="education-text" xs={6}> */}
-            Education
-            {/* </Col> */}
-          </Row>
-          <Row className="education-tagline">
-            {/* <Col className="education-tagline" xs={6}> */}
-            The journey of a lifetime
-            {/* </Col> */}
-          </Row>
+          <Row className="education-text">Education</Row>
+          <Row className="education-tagline">The journey of a lifetime</Row>
         </Col>
         <Col md={6} className="center-col">
           Embark on a transformative journey of self-discovery as you unlock
@@ -32,6 +24,6 @@ const EducationSection = () => {
       </Row>
     </Container>
   );
-};
+}
 
 export default EducationSection;

@@ -6,7 +6,8 @@
 }
 
 body {
-  margin: 0;
+  margin:0;
+  width: 100%;
   font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -66,8 +67,8 @@ li {
 
 .education-container {
   background-color: #3F3D56;
-  height: 700px;
 }
+
 
 .education-bulb{
   height: 80px ;
@@ -94,4 +95,20 @@ li {
   justify-content: center;
   align-items: center;
   text-align: left;
+ }
+
+ .cards_section{
+  padding-top: 30px;
+ }
+
+ .cards_style{
+  height: 100%;
+ }
+
+ .card_image{
+  padding-top: 15px;
+ }
+
+ .card_title{
+  font-weight: 700;
  }

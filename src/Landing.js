@@ -3,6 +3,7 @@ import "./App.css";
 import NavbarSection from "./components/Navbar";
 import HomeBody from "./components/HeroSection";
 import EducationSection from "./components/EducationSection";
+import CardSection from "./components/CardSection";
 
 class Landing extends Component {
   render() {
@@ -15,6 +16,7 @@ class Landing extends Component {
 
         <div className="education-container">
           <EducationSection />
+          <CardSection />
         </div>
       </div>
     );
