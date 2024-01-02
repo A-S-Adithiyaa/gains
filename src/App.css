@@ -2,7 +2,10 @@
   --home-background-color: #DF826C;
   --pure-white: #FFFFFF;
   --secondary-color: #2ecc71;
+  --education-section-background:#3F3D56;
   --font-size: 16px;
+  --canvas-text: #CAF4F4;
+  --canvas-title: #3a2d97;
 }
 
 body {
@@ -25,6 +28,7 @@ body {
 }
 
 .nav-link {
+  color: var(--pure-white);
   margin: 0 20px 0;
   font-size: 18px;
   font-weight: 700;
@@ -66,7 +70,7 @@ li {
 /* Education Part */
 
 .education-container {
-  background-color: #3F3D56;
+  background-color: var(--education-section-background);
 }
 
 
@@ -112,3 +116,24 @@ li {
  .card_title{
   font-weight: 700;
  }
+
+
+/* Mobile views */
+
+ @media only screen and (max-width: 991px) {
+  .offcanvas-header{
+    background-color: var(--canvas-text);
+  }
+
+  .nav-link{
+    color: #3a2d97;
+  }
+
+  .offcanvas-body{
+    background-color: var(--canvas-text);
+   }
+  
+   .button-navbar{
+    margin-top: 10px;
+   }
+}
