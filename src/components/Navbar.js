@@ -5,15 +5,9 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Offcanvas from "react-bootstrap/Offcanvas";
 
-function NavScrollExample() {
+function NavbarSection() {
   return (
-    <Navbar
-      //   bg="dark"
-      //   data-bs-theme="dark"
-      key={"lg"}
-      expand={"lg"}
-      className="bg-body-tertiary mb-3"
-    >
+    <Navbar key={"lg"} expand={"lg"} className="bg-body-tertiary mb-3">
       <Container fluid>
         <Navbar.Brand href="#">GAINS</Navbar.Brand>
         <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-lg`} />
@@ -41,19 +35,6 @@ function NavScrollExample() {
               <Nav.Link className="nav-links" href="#action4">
                 QUESTIONS
               </Nav.Link>
-              {/* <NavDropdown
-                title="Dropdown"
-                id={`offcanvasNavbarDropdown-expand-lg`}
-              >
-                <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
-                <NavDropdown.Item href="#action4">
-                  Another action
-                </NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="#action5">
-                  Something else here
-                </NavDropdown.Item>
-              </NavDropdown> */}
             </Nav>
 
             <Nav>
@@ -64,15 +45,6 @@ function NavScrollExample() {
                 Sign Up
               </Button>
             </Nav>
-            {/* <Form className="d-flex">
-              <Form.Control
-                type="search"
-                placeholder="Search"
-                className="me-2"
-                aria-label="Search"
-              />
-              <Button variant="outline-success">Search</Button>
-            </Form> */}
           </Offcanvas.Body>
         </Navbar.Offcanvas>
       </Container>
@@ -80,4 +52,4 @@ function NavScrollExample() {
   );
 }
 
-export default NavScrollExample;
+export default NavbarSection;

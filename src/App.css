@@ -16,18 +16,7 @@ body {
 
 .home-container {
   background-color: var(--home-background-color);
-  height: 635px;
 }
-
-/* .space-between-navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 50px 0 50px;
-  color: white;
-  font-weight: 700;
-  font-size: 20px;
-} */
 
 .navbar,
 .navbar-default {
@@ -38,19 +27,12 @@ body {
   margin: 0 20px 0;
   font-size: 18px;
   font-weight: 700;
-  /* color: var(--pure-white); */
 }
 
 .button-navbar {
   margin: 0 10px 0;
 }
-/* .company-logo {
-  font-weight: 800;
-}
 
-.logo-name-black {
-  color: black;
-} */
 
 .content-container {
   display: flex;
@@ -74,46 +56,11 @@ li {
 }
 
 .image-container {
-  position: relative;
-  /* padding-right: 250px; */
-}
-
-/* .sign-up-button {
-  background: #FF4742;
-  border: 1px solid #FF4742;
-  border-radius: 6px;
-  box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
-  box-sizing: border-box;
-  color: #FFFFFF;
-  cursor: pointer;
-  display: inline-block;
-  font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-  sans-serif;
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 16px;
-  min-height: 40px;
-  outline: 0;
-  padding: 12px 14px;
-  text-align: center;
-  text-rendering: geometricprecision;
-  text-transform: none;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  vertical-align: middle;
-  
-} */
-
-/* .sign-up-button:hover, .sign-up-button:active {
-  background-color: initial;
-  background-position: 0 0;
-  color: black;
-}
-.sign-up-button:active{
-  opacity: .5;
-} */
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  flex-direction: column;
+ }
 
 /* Education Part */
 
@@ -121,3 +68,30 @@ li {
   background-color: #3F3D56;
   height: 700px;
 }
+
+.education-bulb{
+  height: 80px ;
+  padding: 20px 0 0;
+}
+
+.education-text{
+  font-size: 60px;
+  font-family: "Rock Salt";
+  color: var(--pure-white);
+}
+
+.education-tagline{
+  font-size: 40px;
+  font-family: "Shalimar";
+  color: var(--pure-white);
+}
+
+.center-col {
+  font-family: "Reenie Beanie";
+  color: var(--pure-white);
+  font-size: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: left;
+ }
