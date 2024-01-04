@@ -117,21 +117,41 @@ li {
   font-weight: 700;
  }
 
+/* Assessments Section */
+
+.assessment-send-button {
+  margin-top: 20px;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 255, 0.1); /* blue background */
+  z-index: 9999;
+  backdrop-filter: blur(2px); /* blur the background */
+ }
+
 
 /* Mobile views */
 
  @media only screen and (max-width: 991px) {
-  .offcanvas-header{
+  /* .offcanvas-header{
     background-color: var(--canvas-text);
-  }
+  } */
 
   .nav-link{
     color: #3a2d97;
   }
 
-  .offcanvas-body{
+  /* .offcanvas-body{
     background-color: var(--canvas-text);
-   }
+   } */
   
    .button-navbar{
     margin-top: 10px;
