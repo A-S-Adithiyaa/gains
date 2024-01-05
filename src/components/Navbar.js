@@ -7,9 +7,9 @@ import Offcanvas from "react-bootstrap/Offcanvas";
 
 function NavbarSection() {
   return (
-    <Navbar key={"lg"} expand={"lg"} className="bg-body-tertiary mb-3">
+    <Navbar key={"lg"} expand={"lg"} className="bg-body-tertiary">
       <Container fluid>
-        <Navbar.Brand href="/">GAINS</Navbar.Brand>
+        <Navbar.Brand href="/gains">GAINS</Navbar.Brand>
         <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-lg`} />
         <Navbar.Offcanvas
           id={`offcanvasNavbar-expand-lg`}
@@ -29,7 +29,7 @@ function NavbarSection() {
               <Nav.Link className="nav-links" href="#action2">
                 NOTES
               </Nav.Link>
-              <Nav.Link className="nav-links" href="/assessments">
+              <Nav.Link className="nav-links" href="/gains/assessments">
                 ASSESSMENTS
               </Nav.Link>
               <Nav.Link className="nav-links" href="#action4">
