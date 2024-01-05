@@ -6,10 +6,11 @@ import AssessmentLanding from "./components/assessments/AssessmentLanding";
 
 function App() {
   return (
-    <BrowserRouter basename="/gains">
+    // <BrowserRouter basename="/gains">
+    <BrowserRouter>
       <Routes>
-        <Route index path="/" element={<Landing />} />
-        <Route path="assessments" element={<AssessmentLanding />} />
+        <Route index path="/gains" element={<Landing />} />
+        <Route path="/assessment" element={<AssessmentLanding />} />
       </Routes>
     </BrowserRouter>
   );
