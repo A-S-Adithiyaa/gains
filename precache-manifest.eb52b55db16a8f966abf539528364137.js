@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "affb9545ce1e076b665f799db2fbdf40",
+    "revision": "831602ec2c7e11729e864ccb47b95546",
     "url": "/https://a-s-adithiyaa.github.io/gains/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/https://a-s-adithiyaa.github.io/gains/static/css/2.cc82f8aa.chunk.css"
   },
   {
-    "revision": "653d55ed80782e2696be",
+    "revision": "d9e8531cdbb759ffc42f",
     "url": "/https://a-s-adithiyaa.github.io/gains/static/css/main.7cd2ce7a.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/https://a-s-adithiyaa.github.io/gains/static/js/2.21fa3ad3.chunk.js"
   },
   {
-    "revision": "653d55ed80782e2696be",
-    "url": "/https://a-s-adithiyaa.github.io/gains/static/js/main.84ad4461.chunk.js"
+    "revision": "d9e8531cdbb759ffc42f",
+    "url": "/https://a-s-adithiyaa.github.io/gains/static/js/main.45379886.chunk.js"
   },
   {
     "revision": "dc3e9ab9eeb637539edf",
