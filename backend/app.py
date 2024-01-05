@@ -2,15 +2,9 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from pprint import pprint
 from lmqg import TransformersQG
-from spacy.cli import download
-<<<<<<< HEAD
-=======
-
->>>>>>> 81344cf2612dc3b26961238856fd11c815e23514
 
 app = Flask(__name__)
 CORS(app)
-download("en_core_web_sm")
 
 model = TransformersQG(model='lmqg/t5-base-squad-qg', model_ae='lmqg/t5-base-squad-ae')
 
