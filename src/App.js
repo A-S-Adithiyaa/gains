@@ -1,18 +1,19 @@
 import "./App.css";
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import Landing from "./Landing";
 import AssessmentLanding from "./components/assessments/AssessmentLanding";
+import NavbarSection from "./components/Navbar";
 
 function App() {
   return (
-    // <BrowserRouter basename="/gains">
-    <BrowserRouter>
+    <HashRouter>
+      <NavbarSection />
       <Routes>
-        <Route index path="/gains" element={<Landing />} />
-        <Route path="/assessment" element={<AssessmentLanding />} />
+        <Route path="/" element={<Landing />} />
+        <Route path="/assessments/" element={<AssessmentLanding />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
