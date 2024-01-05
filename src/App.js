@@ -9,7 +9,7 @@ function App() {
     <BrowserRouter basename="/gains">
       <Routes>
         <Route index path="/" element={<Landing />} />
-        <Route path="assessment" element={<AssessmentLanding />} />
+        <Route path="gains/assessment" element={<AssessmentLanding />} />
       </Routes>
     </BrowserRouter>
   );
