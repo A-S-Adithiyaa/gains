@@ -29,7 +29,7 @@ function NavbarSection() {
               <Nav.Link className="nav-links" href="#action2">
                 NOTES
               </Nav.Link>
-              <Nav.Link className="nav-links" href="#/assessments">
+              <Nav.Link className="nav-links" href="/assessments">
                 ASSESSMENTS
               </Nav.Link>
               <Nav.Link className="nav-links" href="#action4">
