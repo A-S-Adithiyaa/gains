@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
 
 // const questions = [
@@ -24,9 +24,9 @@ function TakeAssessment({ questions }) {
     event.target.answer.value = "";
   };
 
-  useEffect(() => {
-    document.title = `Question ${currentIndex + 1} of ${questions.length}`;
-  }, [currentIndex]);
+  // useEffect(() => {
+  //   document.title = `Question ${currentIndex + 1} of ${questions.length}`;
+  // }, [currentIndex]);
 
   return (
     <Container>
