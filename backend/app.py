@@ -6,7 +6,7 @@ from lmqg import TransformersQG
 app = Flask(__name__)
 CORS(app)
 
-model = TransformersQG(model='lmqg/t5-base-squad-qg', model_ae='lmqg/t5-base-squad-ae')
+model = TransformersQG(model='lmqg/mt5-small-zhquad-qg-trimmed-50000', model_ae='lmqg/mt5-small-zhquad-ae-trimmed-50000')
 
 @app.route('/generate_qa', methods=['POST'])
 def generate_qa():
