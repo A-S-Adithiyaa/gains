@@ -11,7 +11,7 @@ function App() {
       <NavbarSection />
       <Routes>
         <Route path="/" element={<Landing />} />
-        <Route path="/assessments/" element={<AssessmentLanding />} />
+        <Route path="/assessments" element={<AssessmentLanding />} />
       </Routes>
     </HashRouter>
   );
