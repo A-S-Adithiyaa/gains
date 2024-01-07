@@ -1,32 +1,24 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
 
-// const questions = [
-//   ["Question 1", "Answer 1"],
-//   ["Question 2", "Answer 2"],
-//   //... add more questions here
-// ];
-
-function TakeAssessment({ questions }) {
+function TakeAssessment({ mcqQuestions }) {
   const [score, setScore] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const handleSubmit = (event) => {
+  const handleMCQSubmit = (event) => {
     event.preventDefault();
 
     const userAnswer = event.target.answer.value;
 
-    if (userAnswer.toLowerCase() === questions[currentIndex][1].toLowerCase()) {
+    if (
+      userAnswer.toLowerCase() ===
+      mcqQuestions[currentIndex].correctAnswer.toLowerCase()
+    ) {
       setScore(score + 1);
     }
 
     setCurrentIndex(currentIndex + 1);
-    event.target.answer.value = "";
   };
-
-  // useEffect(() => {
-  //   document.title = `Question ${currentIndex + 1} of ${questions.length}`;
-  // }, [currentIndex]);
 
   return (
     <Container>
@@ -36,14 +28,21 @@ function TakeAssessment({ questions }) {
         </Col>
       </Row>
 
-      {currentIndex < questions.length ? (
+      {currentIndex < mcqQuestions.length ? (
         <Row className={`question ${currentIndex % 2 === 0 ? "active" : ""}`}>
           <Col>
-            <h2>{questions[currentIndex][0]}</h2>
-            <Form onSubmit={handleSubmit}>
-              <Form.Group controlId="answer">
-                <Form.Control type="text" name="answer" required />
-              </Form.Group>
+            <h2>{mcqQuestions[currentIndex].question}</h2>
+            <Form onSubmit={handleMCQSubmit}>
+              {mcqQuestions[currentIndex].options.map((option, index) => (
+                <Form.Check
+                  key={index}
+                  type="radio"
+                  label={option}
+                  name="answer"
+                  value={option}
+                  required
+                />
+              ))}
               <Button
                 className="assessment-send-button"
                 variant="primary"
@@ -59,7 +58,7 @@ function TakeAssessment({ questions }) {
           <Col>
             <h2>Quiz Completed!</h2>
             <h3>
-              Your score is: {score} / {questions.length}
+              Your score is: {score} / {mcqQuestions.length}
             </h3>
           </Col>
         </Row>
@@ -69,21 +68,3 @@ function TakeAssessment({ questions }) {
 }
 
 export default TakeAssessment;
-
-// import React from "react";
-
-// const TakeAssessment = ({ questionsAndAnswers }) => {
-//   // Use the 'input' prop in your component
-
-//   console.log(questionsAndAnswers);
-
-//   return (
-//     <div>
-//       <h2>Take Assessment Component</h2>
-//       <p>Input from GenerateQuestions: {questionsAndAnswers}</p>
-//       {/* Add your TakeAssessment component content here */}
-//     </div>
-//   );
-// };
-
-// export default TakeAssessment;
