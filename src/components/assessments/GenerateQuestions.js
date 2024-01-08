@@ -57,7 +57,7 @@ class GenerateQuestions extends Component {
       <>
         {loading && (
           <div className="loading-container">
-            <img src="/images/infinity_gif.svg" alt="Loading..." />
+            <img src="images/infinity_gif.svg" alt="Loading..." />
           </div>
         )}
         {!takeAssessment ? (
@@ -68,7 +68,7 @@ class GenerateQuestions extends Component {
                 md={6}
                 className="d-none d-md-flex align-items-center justify-content-center"
               >
-                <Image src="/images/assessment_image.svg"></Image>
+                <Image src="images/assessment_image.svg"></Image>
               </Col>
               <Col xs={12} md={6}>
                 <Row>
