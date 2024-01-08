@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { Container, Row, Col, Form, Button, Image } from "react-bootstrap";
 import axios from "axios";
 import QuestionCard from "./components/QuestionCard";
 import { MainApp } from "./components/PageElements/MainApp";
@@ -63,32 +63,43 @@ class GenerateQuestions extends Component {
         {!takeAssessment ? (
           <Container>
             <Row>
-              <Col xs={12} className="text-center">
-                <h1>Assessments</h1>
+              <Col
+                xs={12}
+                md={6}
+                className="d-none d-md-flex align-items-center justify-content-center"
+              >
+                <Image src="/images/assessment_image.svg"></Image>
               </Col>
-            </Row>
-            <Row>
-              <Col xs={12} className="text-center">
-                <Form>
-                  <Form.Control
-                    as="textarea"
-                    rows={12}
-                    placeholder="Place your content"
-                    value={this.state.input}
-                    onChange={this.handleInputChange}
-                  />
-                </Form>
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={12} className="text-center">
-                <Button
-                  className="assessment-send-button"
-                  variant="primary"
-                  onClick={this.handleSubmit}
-                >
-                  {loading ? "Loading..." : "Send"}
-                </Button>
+              <Col xs={12} md={6}>
+                <Row>
+                  <Col xs={12} className="text-center">
+                    <h1>Assessments</h1>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col xs={12} className="text-center">
+                    <Form>
+                      <Form.Control
+                        as="textarea"
+                        rows={20}
+                        placeholder="Place your content"
+                        value={this.state.input}
+                        onChange={this.handleInputChange}
+                      />
+                    </Form>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col xs={12} className="text-center">
+                    <Button
+                      className="assessment-send-button"
+                      variant="primary"
+                      onClick={this.handleSubmit}
+                    >
+                      {loading ? "Loading..." : "Send"}
+                    </Button>
+                  </Col>
+                </Row>
               </Col>
             </Row>
           </Container>

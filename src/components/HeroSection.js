@@ -5,8 +5,11 @@ import Image from "react-bootstrap/Image";
 function HeroSection() {
   return (
     <Container>
-      <Row>
-        <Col md={6}>
+      <Row md={12} sm={12}>
+        <Col
+          md={6}
+          className="d-flex flex-column align-items-start justify-content-end"
+        >
           <div className="text-container">
             <ul>
               <li>Explore</li>
@@ -17,11 +20,15 @@ function HeroSection() {
             </ul>
           </div>
         </Col>
-        <Col md={6} className="image-container">
+        <Col
+          md={6}
+          className="image-container d-flex align-items-end justify-content-end"
+        >
           <Image src="images/student_with_book.svg" alt="Placeholder" fluid />
         </Col>
       </Row>
     </Container>
   );
 }
+
 export default HeroSection;
