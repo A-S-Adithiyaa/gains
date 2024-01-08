@@ -10,8 +10,8 @@ function App() {
     <>
       <NavbarSection />
       <Routes>
-        <Route path="/" element={<Landing />}></Route>
-        <Route path="/assessments" element={<AssessmentLanding />}></Route>
+        <Route path="/gains" exact Component={Landing} />
+        <Route path="/gains/assessments" exact Component={AssessmentLanding} />
       </Routes>
     </>
   );
