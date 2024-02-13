@@ -7,6 +7,9 @@
   --font-size: 16px;
   --canvas-text: #CAF4F4;
   --canvas-title: #3a2d97;
+  --primary-purple: #230849;
+  --primary-green: #03FEC5;
+  --primary-violet: #D621FF;
 }
 
 body {
@@ -16,6 +19,118 @@ body {
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
 }
+
+/* Login Page */
+.login-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.login-left {
+  flex: 1;
+  background-color: var(--pure-white);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-right {
+  flex: 1;
+  background-color: var(--primary-purple);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-right img {
+  max-width: 80%;
+  max-height: 80%;
+}
+
+
+.Auth-form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Auth-form {
+  width: 450px;
+  box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
+  padding-top: 30px;
+  padding-bottom: 20px;
+  border-radius: 8px;
+  background-color: var(--pure-white);
+}
+
+.Auth-form-content {
+  padding-left: 12%;
+  padding-right: 12%;
+}
+
+.Auth-form-title {
+  text-align: center;
+  margin-bottom: 1em;
+  font-size: 24px;
+  color: rgb(34, 34, 34);
+  font-weight: 800;
+}
+
+label {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgb(34, 34, 34);
+}
+
+
+.hidden {
+  opacity:0;
+}
+.console-container {
+ 
+  font-family:Khula;
+  font-size:4em;
+  text-align:center;
+  display:block;
+  position:relative;
+  color:white;
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+  margin:auto;
+}
+.console-underscore {
+   display:inline-block;
+   color: var(--primary-purple);
+  position:relative;
+  top:-0.14em;
+  left:10px;
+}
+
+/* Media query for screens narrower than 768px (typical mobile devices) */
+@media (max-width: 768px) {
+  .login-container {
+    flex-direction: column; /* Stack the elements vertically */
+  }
+
+  .login-right {
+    display: none; /* Hide the right part */
+  }
+
+  .login-left {
+    flex: 1; /* Ensure the left part takes up the full width */
+  }
+
+  .Auth-form{
+    width: 330px;
+  }
+
+  .console-container {
+    font-size: 2em;
+  }
+}
+
 
 /* Home Part and Navbar Part */
 
@@ -197,3 +312,8 @@ li {
     margin-top: 10px;
    }
 }
+
+
+
+
+@import url(https://fonts.googleapis.com/css?family=Khula:700);

@@ -39,10 +39,10 @@ function NavbarSection() {
             </Nav>
 
             <Nav>
-              <Button className="button-navbar" variant="dark">
+              <Button href="#/login" className="button-navbar" variant="dark">
                 Log In
               </Button>
-              <Button className="button-navbar" variant="dark">
+              <Button href="#/signup" className="button-navbar" variant="dark">
                 Sign Up
               </Button>
             </Nav>
