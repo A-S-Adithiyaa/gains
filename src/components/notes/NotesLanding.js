@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import GenerateQuestions from "./GenerateQuestions";
+import GenerateSummary from "./GenerateSummary";
 
-function AssessmentLanding() {
+function NotesLanding() {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -15,11 +15,13 @@ function AssessmentLanding() {
     }
   }, [navigate]);
 
-  return (
-    <div className="assessment-landing">
-      <GenerateQuestions />
-    </div>
-  );
+  if (localStorage.getItem("isLoggedIn")) {
+    return (
+      <div className="assessment-landing">
+        <GenerateSummary />
+      </div>
+    );
+  }
 }
 
-export default AssessmentLanding;
+export default NotesLanding;

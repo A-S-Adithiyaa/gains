@@ -88,7 +88,8 @@ label {
 }
 .console-container {
  
-  font-family:Khula;
+  font-family:'Courier New', Courier, monospace;
+  font-weight: 550;
   font-size:4em;
   text-align:center;
   display:block;
@@ -149,6 +150,10 @@ label {
   margin: 0 20px 0;
   font-size: 18px;
   font-weight: 700;
+}
+
+.navbar-nav .nav-link.active, .navbar-nav .nav-link.show {
+  color: none;
 }
 
 .button-navbar {
@@ -265,6 +270,10 @@ li {
   height: auto;
 }
 
+.top{
+  color: var(--pure-black);
+}
+
 @media screen and (max-width: 980px){
   .app{
     padding: 0 1rem;
@@ -313,7 +322,3 @@ li {
    }
 }
 
-
-
-
-@import url(https://fonts.googleapis.com/css?family=Khula:700);

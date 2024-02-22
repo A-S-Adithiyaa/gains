@@ -1,4 +1,3 @@
-// utils.js
 export const consoleText = (words, id, colors) => {
   if (colors === undefined) colors = ["#fff"];
   let visible = true;

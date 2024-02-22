@@ -74,6 +74,8 @@ function SignUpPage() {
 
   const validateForm = () => {
     let isValid = true;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^\d{10}$/;
 
     // Validate first name
     if (!formData.firstName.trim()) {
@@ -82,33 +84,31 @@ function SignUpPage() {
     }
 
     // Validate last name
-    if (!formData.lastName.trim()) {
+    else if (!formData.lastName.trim()) {
       toast.error("Please enter your last name");
       isValid = false;
     }
 
     // Validate email
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
+    else if (!emailRegex.test(formData.email)) {
       toast.error("Please enter a valid email address");
       isValid = false;
     }
 
     // Validate password
-    if (formData.password.length < 6) {
+    else if (formData.password.length < 6) {
       toast.error("Password must be at least 6 characters long");
       isValid = false;
     }
 
     // Validate date of birth
-    if (!isValidDate(formData.dob)) {
+    else if (!isValidDate(formData.dob)) {
       toast.error("Please enter a valid date of birth");
       isValid = false;
     }
 
     // Validate phone number
-    const phoneRegex = /^\d{10}$/;
-    if (!phoneRegex.test(formData.phoneNumber)) {
+    else if (!phoneRegex.test(formData.phoneNumber)) {
       toast.error("Please enter a valid 10-digit phone number");
       isValid = false;
     }

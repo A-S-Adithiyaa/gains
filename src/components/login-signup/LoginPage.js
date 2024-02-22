@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { consoleText } from "./TypingAnimation";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function LoginPage() {
+  const navigate = useNavigate();
+
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [email, setEmail] = useState("");
@@ -34,33 +37,57 @@ function LoginPage() {
 
     setIsLoading(true);
 
-    // Perform the API call
-    fetch("http://localhost:8080/jpa/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to login");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        // Handle successful login
-        console.log("Login successful:", data);
-      })
-      .catch((error) => {
-        setError(error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    if (email === "adi@gmail.com" && password === "123456") {
+      // Simulate successful login
+      console.log("Login successful");
+
+      localStorage.setItem("isLoggedIn", true);
+      navigate("/");
+      window.location.reload(true);
+      // Clear form fields
+      // setEmail("");
+      // setPassword("");
+    } else {
+      // Simulate login error
+      console.log("Login failed");
+      toast.error("Log in failed. Please try again later.");
+
+      // Set error state
+      setError("Invalid email or password");
+    }
+
+    setIsLoading(false);
+
+    // // Perform the API call
+    // fetch("http://localhost:8080/jpa/login", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({
+    //     email: email,
+    //     password: password,
+    //   }),
+    // })
+    //   .then((response) => {
+    //     if (!response.ok) {
+    //       throw new Error("Failed to login");
+
+    // toast.error("Log in failed. Please try again later.");
+    //     }
+    //     return response.json();
+    //   })
+    //   .then((data) => {
+    //     // Handle successful login
+    //     console.log("Login successful:", data);
+
+    //   })
+    //   .catch((error) => {
+    //     setError(error);
+    //   })
+    //   .finally(() => {
+    //     setIsLoading(false);
+    //   });
   };
 
   const validateEmail = (email) => {

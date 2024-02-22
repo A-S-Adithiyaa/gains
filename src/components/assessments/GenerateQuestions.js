@@ -24,7 +24,7 @@ class GenerateQuestions extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      input: "",
+      input: localStorage.getItem("input") || "",
       loading: false,
       takeAssessment: false,
       questionsAndAnswers: [],
@@ -32,9 +32,11 @@ class GenerateQuestions extends Component {
   }
 
   handleInputChange = (event) => {
+    const inputValue = event.target.value;
     this.setState({
-      input: event.target.value,
+      input: inputValue,
     });
+    localStorage.setItem("input", inputValue); // Store input in localStorage
   };
 
   handleSubmit = async () => {
