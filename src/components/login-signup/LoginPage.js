@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { consoleText } from "./TypingAnimation";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import axios from 'axios';
+import axios from "axios";
 import { Navigate, useNavigate } from "react-router-dom";
 
 function LoginPage() {
@@ -10,11 +10,11 @@ function LoginPage() {
   const [error, setError] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const formData={
-    "email":email,
-    "password":password
-  }
-  const navigate = useNavigate('');
+  const formData = {
+    email: email,
+    password: password,
+  };
+  const navigate = useNavigate("");
 
   useEffect(() => {
     // Call the consoleText function with the specified parameters
@@ -41,54 +41,53 @@ function LoginPage() {
 
     setIsLoading(true);
 
-
-    axios.post('http://localhost:8080/jpa/login',formData)
-        .then(function (response) {
-            if(response.data[0]==="Authorized"){
-                toast("Successfully Logged In")
-                localStorage.setItem('isLoggedIn', response.data[1]);
-                navigate('/');
-                setEmail('');
-                setPassword('');
-            }
-            else{
-              setIsLoading(false);
-                toast(response.data[0])
-            }
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
+    axios
+      .post("http://localhost:8080/jpa/login", formData)
+      .then(function (response) {
+        if (response.data[0] === "Authorized") {
+          toast("Successfully Logged In");
+          localStorage.setItem("isLoggedIn", response.data[1]);
+          navigate("/");
+          setEmail("");
+          setPassword("");
+        } else {
+          setIsLoading(false);
+          toast(response.data[0]);
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
     // Perform the API call
-  //   fetch("http://localhost:8080/jpa/login", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //       email: email,
-  //       password: password,
-  //     }),
-  //   })
-  //     .then((response) => {
-  //       if (!response.ok) {
-  //         throw new Error("Failed to login");
-  //       }
-  //       return response.json();
-  //     })
-  //     .then((data) => {
-  //       // Handle successful login
-  //       console.log("Login successful:", data);
-  //     })
-  //     .catch((error) => {
-  //       setError(error);
-  //     })
-  //     .finally(() => {
-  //       setIsLoading(false);
-  //     });
+    //   fetch("http://localhost:8080/jpa/login", {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify({
+    //       email: email,
+    //       password: password,
+    //     }),
+    //   })
+    //     .then((response) => {
+    //       if (!response.ok) {
+    //         throw new Error("Failed to login");
+    //       }
+    //       return response.json();
+    //     })
+    //     .then((data) => {
+    //       // Handle successful login
+    //       console.log("Login successful:", data);
+    //     })
+    //     .catch((error) => {
+    //       setError(error);
+    //     })
+    //     .finally(() => {
+    //       setIsLoading(false);
+    //     });
   };
 
-
+  console.log("Hello, World!");
 
   const validateEmail = (email) => {
     // Basic email validation
