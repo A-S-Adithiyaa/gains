@@ -11,6 +11,7 @@ class GenerateQuestions extends Component {
       loading: false,
       generateSummary: false,
       summary: [],
+      title:""
     };
   }
 
@@ -24,7 +25,41 @@ class GenerateQuestions extends Component {
 
   handleSubmit = async () => {
     this.setState({ loading: true });
+    const id=localStorage.getItem('isLoggedIn')
     const { input } = this.state;
+    const title_res = await axios.post(
+      "http://localhost:5000/generate-title",
+      {
+        context: input,
+      }
+    );
+    console.log(title_res.data);
+    this.setState({
+      title: title_res.data,
+      loading:false
+    });
+    fetch("http://localhost:8080/jpa/"+id+"/create-topics",{
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({"topic":title_res.data.title}),
+    })
+        .then(res=>{
+            return res.json();
+        })
+        .then(data=>{
+          localStorage.setItem('current_topic', data);
+           console.log(data)
+           this.setState({
+            loading:false
+          });
+        
+        })
+        .catch(function (error) {
+            
+            console.log(error);
+        });
     const response = await axios.post(
       "http://localhost:5000/generate_summary",
       {

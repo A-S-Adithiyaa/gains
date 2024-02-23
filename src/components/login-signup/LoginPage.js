@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { consoleText } from "./TypingAnimation";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from 'axios';
+import { Navigate, useNavigate } from "react-router-dom";
 
 function LoginPage() {
-  const navigate = useNavigate();
-
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const formData={
+    "email":email,
+    "password":password
+  }
+  const navigate = useNavigate('');
 
   useEffect(() => {
     // Call the consoleText function with the specified parameters
@@ -37,58 +41,54 @@ function LoginPage() {
 
     setIsLoading(true);
 
-    if (email === "adi@gmail.com" && password === "123456") {
-      // Simulate successful login
-      console.log("Login successful");
 
-      localStorage.setItem("isLoggedIn", true);
-      navigate("/");
-      window.location.reload(true);
-      // Clear form fields
-      // setEmail("");
-      // setPassword("");
-    } else {
-      // Simulate login error
-      console.log("Login failed");
-      toast.error("Log in failed. Please try again later.");
-
-      // Set error state
-      setError("Invalid email or password");
-    }
-
-    setIsLoading(false);
-
-    // // Perform the API call
-    // fetch("http://localhost:8080/jpa/login", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     email: email,
-    //     password: password,
-    //   }),
-    // })
-    //   .then((response) => {
-    //     if (!response.ok) {
-    //       throw new Error("Failed to login");
-
-    // toast.error("Log in failed. Please try again later.");
-    //     }
-    //     return response.json();
-    //   })
-    //   .then((data) => {
-    //     // Handle successful login
-    //     console.log("Login successful:", data);
-
-    //   })
-    //   .catch((error) => {
-    //     setError(error);
-    //   })
-    //   .finally(() => {
-    //     setIsLoading(false);
-    //   });
+    axios.post('http://localhost:8080/jpa/login',formData)
+        .then(function (response) {
+            if(response.data[0]==="Authorized"){
+                toast("Successfully Logged In")
+                localStorage.setItem('isLoggedIn', response.data[1]);
+                navigate('/');
+                setEmail('');
+                setPassword('');
+            }
+            else{
+              setIsLoading(false);
+                toast(response.data[0])
+            }
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    // Perform the API call
+  //   fetch("http://localhost:8080/jpa/login", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       email: email,
+  //       password: password,
+  //     }),
+  //   })
+  //     .then((response) => {
+  //       if (!response.ok) {
+  //         throw new Error("Failed to login");
+  //       }
+  //       return response.json();
+  //     })
+  //     .then((data) => {
+  //       // Handle successful login
+  //       console.log("Login successful:", data);
+  //     })
+  //     .catch((error) => {
+  //       setError(error);
+  //     })
+  //     .finally(() => {
+  //       setIsLoading(false);
+  //     });
   };
+
+
 
   const validateEmail = (email) => {
     // Basic email validation

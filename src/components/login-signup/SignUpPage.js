@@ -1,20 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { consoleText } from "./TypingAnimation";
 import { toast } from "react-toastify";
+import axios from 'axios';
 import "react-toastify/dist/ReactToastify.css";
+import { Navigate, useNavigate } from "react-router-dom";
 
 toast.configure();
 
 function SignUpPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
     email: "",
     password: "",
-    dob: "",
-    phoneNumber: "",
+    firstName: "",
+    lastName: "",
+    phone: "",
+    dob: "", 
   });
+  const navigate = useNavigate('');
 
   useEffect(() => {
     // Call the consoleText function with the specified parameters
@@ -34,34 +37,50 @@ function SignUpPage() {
     }
 
     setIsLoading(true);
-
-    try {
-      const response = await fetch("https://api.example.com/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to sign up");
-      }
-
-      // Handle successful sign-up
-      console.log("Sign up successful!");
-
-      // Show success toast
-      toast.success("Sign up successful!");
-    } catch (error) {
-      // Handle API call errors
-      console.error("Sign up failed:", error);
+    axios.post('http://localhost:8080/jpa/create-users', formData)
+          .then(function (response) {
+            console.log(response);
+            if (response.data!=="Account created") {
+              throw new Error("Failed to sign up");
+            }
+            toast("Account Created")
+            navigate('/login');
+          })
+          .catch(function (error) {
+            console.error("Sign up failed:", error);
 
       // Show error toast
       toast.error("Sign up failed. Please try again later.");
-    } finally {
-      setIsLoading(false);
-    }
+          });
+          setIsLoading(false);
+        
+  //   try {
+  //     const response = await fetch("https://localhost:8080/jpa/create-users", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(formData),
+  //     });
+
+  //     if (!response.ok) {
+  //       throw new Error("Failed to sign up");
+  //     }
+
+  //     // Handle successful sign-up
+  //     console.log("Sign up successful!");
+
+  //     // Show success toast
+  //     toast.success("Sign up successful!");
+  //   } catch (error) {
+  //     // Handle API call errors
+  //     console.error("Sign up failed:", error);
+
+  //     // Show error toast
+  //     toast.error("Sign up failed. Please try again later.");
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
   };
 
   const handleChange = (event) => {
@@ -74,8 +93,6 @@ function SignUpPage() {
 
   const validateForm = () => {
     let isValid = true;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const phoneRegex = /^\d{10}$/;
 
     // Validate first name
     if (!formData.firstName.trim()) {
@@ -84,31 +101,33 @@ function SignUpPage() {
     }
 
     // Validate last name
-    else if (!formData.lastName.trim()) {
+    if (!formData.lastName.trim()) {
       toast.error("Please enter your last name");
       isValid = false;
     }
 
     // Validate email
-    else if (!emailRegex.test(formData.email)) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
       toast.error("Please enter a valid email address");
       isValid = false;
     }
 
     // Validate password
-    else if (formData.password.length < 6) {
+    if (formData.password.length < 6) {
       toast.error("Password must be at least 6 characters long");
       isValid = false;
     }
 
     // Validate date of birth
-    else if (!isValidDate(formData.dob)) {
+    if (!isValidDate(formData.dob)) {
       toast.error("Please enter a valid date of birth");
       isValid = false;
     }
 
     // Validate phone number
-    else if (!phoneRegex.test(formData.phoneNumber)) {
+    const phoneRegex = /^\d{10}$/;
+    if (!phoneRegex.test(formData.phone)) {
       toast.error("Please enter a valid 10-digit phone number");
       isValid = false;
     }
@@ -202,8 +221,8 @@ function SignUpPage() {
                   <input
                     type="tel"
                     className="form-control mt-1"
-                    name="phoneNumber"
-                    value={formData.phoneNumber}
+                    name="phone"
+                    value={formData.phone}
                     onChange={handleChange}
                     placeholder="Phone Number"
                   />
