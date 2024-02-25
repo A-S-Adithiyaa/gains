@@ -7,8 +7,7 @@ import LoginPage from "./components/login-signup/LoginPage";
 import SignUpPage from "./components/login-signup/SignUpPage";
 import NotesLanding from "./components/notes/NotesLanding";
 import History from "./components/history/History";
-import 'bootstrap-icons/font/bootstrap-icons.css';
-
+import ProfileLanding from "./components/profile/ProfileLanding";
 
 function App() {
   return (
@@ -20,6 +19,7 @@ function App() {
         <Route exact path="/login" element={<LoginPage />} />
         <Route exact path="/signup" element={<SignUpPage />} />
         <Route exact path="/history" element={<History/>} />
+        <Route exact path="/profile" element={<ProfileLanding />} />
       </Routes>
     </>
   );
