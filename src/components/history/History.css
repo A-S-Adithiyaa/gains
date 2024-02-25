@@ -1,5 +1,4 @@
 .his_back{
-    background-image: url("back.jpg");
     width: 100%;
     min-height: 100vh;
     background-repeat: repeat-y;
@@ -54,10 +53,6 @@
     outline: none;
 }
 
-.radio-buttons{
-    display: flex;
-    flex-direction: column;
-}
 
 
 .his_grid{
@@ -65,20 +60,97 @@
     grid-template-columns: 1fr 6fr ;
 }
 
-.radio-button{
-    background-color: white;
-    outline: none;
-    border: none;
-    font-size: xx-large;
-    appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-}
 
-.radio-button:hover{
-    background-color:aliceblue;
-}
 
 .underline{
     text-decoration:underline ;
+    text-decoration-thickness: 3px;
+}
+
+.radio-buttons{
+    margin-top: 20%;
+    font-size: xx-large;
+    font-weight: bolder;
+    cursor: pointer;
+}
+
+#radio{
+    margin-top: 10%;
+}
+
+.today{
+    font-size: x-large;
+    font-weight: bolder;
+}
+.his_table{
+    display: flex;
+    flex-direction: column;
+    margin-left:2%;
+    text-align: left;
+    box-shadow: 2px 5px 3px black;
+    margin-top: 5%;
+    padding-left: 2%;
+    padding-right: 2%;
+    height: fit-content;
+}
+
+.grid_table{
+    display: grid;
+    grid-template-columns: 1fr 4fr 4fr 4fr;
+    margin-bottom: 2%;
+}
+
+.grid_table-light{
+    display: grid;
+    grid-template-columns: 1fr 4fr 4fr 4fr;
+    
+    background-color: #f5f5f5;
+}
+
+.grid_table-dark{
+    display: grid;
+    grid-template-columns: 1fr 4fr 4fr 4fr;
+   
+    background-color: #d9d9d9;
+}
+.head{
+    font-size: x-large;
+    font-weight: bolder; 
+}
+
+.grid{
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 2%;
+}
+
+.titles{
+    font-size: large;
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+.but-light{
+    border-radius: 10px;
+    background-color: #f5f5f5;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    margin-left: 1%;
+}
+
+.but-dark{
+    border-radius: 10px;
+    background-color: #d9d9d9;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    margin-left: 1%;
+}
+
+.checkbox{
+    height:20px;
+    width:20px;
+    margin-left: 20%;
+    margin-top: 25%;
+    margin-bottom: 25%;
+
 }

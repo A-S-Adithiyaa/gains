@@ -5,6 +5,35 @@ import { useState } from "react";
 
 const History = () => {
     const [option,setOption]=useState("");
+    const date=new Date();
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1; 
+    var day = date.getDate();
+
+    var action=[
+        {
+            "id":0,
+            "title":"Python",
+            "actions":[true,false,true,true]
+        },
+        {   
+            "id":1,
+            "title":"C",
+            "actions":[true,true,false,false]
+        },
+        {
+            "id":2,
+            "title":"Java",
+            "actions":[false,false,true,true]
+        },
+        {
+            "id":3,
+            "title":"Html",
+            "actions":[false,false,true,false]
+        }
+    ]
+
+    
     return ( 
         <div>
             <div className="his_back">
@@ -16,21 +45,44 @@ const History = () => {
                     </div>
                     <div className="his_grid">
                         <div class="radio-buttons" >
-                        <input type="radio" class="radio-button" name="radio-group" value="Today" /><span >Today</span>  
-                            <input type="radio" class="radio-button" name="radio-group" value="Yesterday" /><span >Yesterday</span>
-                            <input type="radio" class="radio-button" name="radio-group" value="This Week" /><span >This Week</span>
-                            <input type="radio" class="radio-button" name="radio-group" value="This Month" /><span >This Month</span>
-                            <input type="radio" class="radio-button" name="radio-group" value="All" /><span >All</span>
+                            <p id="radio" className={option=="Today"?"underline":""} onClick={()=>setOption("Today")}>Today</p>
+                            <p id="radio" className={option=="Yesterday"?"underline":""} onClick={()=>setOption("Yesterday")}>Yesterday</p>
+                            <p id="radio" className={option=="This Week"?"underline":""} onClick={()=>setOption("This Week")}>This Week</p>
+                            <p id="radio" className={option=="This Month"?"underline":""} onClick={()=>setOption("This Month")}>This Month</p>
+                            <p id="radio" className={option=="All"?"underline":""} onClick={()=>setOption("All")}>All</p>
                         </div>
-
-
                         <div className="his_table">
-                        <div class="radio-buttons">
-  <button id="option1" class="radio-button" name="radio-group" value="option1">Option 1</button>
-  <button id="option2" class="radio-button" name="radio-group" value="option2">Option 2</button>
-  <button id="option3" class="radio-button" name="radio-group" value="option3">Option 3</button>
-</div>
+                            <p className="today">{"Today " + day + "-" + month + "-" +year}</p>
+                            <div className="grid" >
+                                <div className="grid_table">
+                                    <div className="head"> </div>
+                                    <div className="head">Title</div>
+                                    <div className="head">Actions Performed</div>
+                                    <div className="head">More Actions</div>
+                                </div>
 
+                                {action.map((act)=>(
+                                    
+                                    <div className={act.id%2==0?"grid_table-dark":"grid_table-light"}>
+                                        <input className="checkbox" type="checkbox"></input>
+                                        <div className="titles">{act.title}</div>
+                                        <div>
+                                            {act.actions[0]?<button className={act.id%2==0?"but-light":"but-dark"}>Learn</button>:""}
+                                            {act.actions[1]?<button className={act.id%2==0?"but-light":"but-dark"}>Notes</button>:""}
+                                            {act.actions[2]?<button className={act.id%2==0?"but-light":"but-dark"}>Doubts</button>:""}
+                                            {act.actions[3]?<button className={act.id%2==0?"but-light":"but-dark"}>Test</button>:""}   
+                                        </div>
+                                        <div>
+                                            {act.actions[0]?"":<button className={act.id%2==0?"but-light":"but-dark"}>Learn</button>}
+                                            {act.actions[1]?"":<button className={act.id%2==0?"but-light":"but-dark"}>Notes</button>}
+                                            {act.actions[2]?"":<button className={act.id%2==0?"but-light":"but-dark"}>Doubts</button>}
+                                            {act.actions[3]?"":<button className={act.id%2==0?"but-light":"but-dark"}>Test</button>}
+                                        </div>
+                                    </div>    
+                                ))
+                                    
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>
