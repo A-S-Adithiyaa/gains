@@ -6,6 +6,9 @@ import AssessmentLanding from "./components/assessments/AssessmentLanding";
 import LoginPage from "./components/login-signup/LoginPage";
 import SignUpPage from "./components/login-signup/SignUpPage";
 import NotesLanding from "./components/notes/NotesLanding";
+import History from "./components/history/History";
+import 'bootstrap-icons/font/bootstrap-icons.css';
+
 
 function App() {
   return (
@@ -16,6 +19,7 @@ function App() {
         <Route exact path="/notes" element={<NotesLanding />} />
         <Route exact path="/login" element={<LoginPage />} />
         <Route exact path="/signup" element={<SignUpPage />} />
+        <Route exact path="/history" element={<History/>} />
       </Routes>
     </>
   );

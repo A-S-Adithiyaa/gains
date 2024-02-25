@@ -75,7 +75,7 @@ function NavbarSection() {
                   <NavDropdown.Item href="#action/3.1">
                     Profile
                   </NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.2">
+                  <NavDropdown.Item href="#/history">
                     History
                   </NavDropdown.Item>
                   <NavDropdown.Item href="#action/3.3"></NavDropdown.Item>

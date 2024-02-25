@@ -1,0 +1,84 @@
+.his_back{
+    background-image: url("back.jpg");
+    width: 100%;
+    min-height: 100vh;
+    background-repeat: repeat-y;
+    background-size: cover;
+    position: absolute;
+    z-index: 1;
+    top: 0px;
+    left: 0px;
+
+}
+
+.his_body{
+    margin-top: 7%;
+    margin-left:5%;
+    margin-right:6%;
+   
+}
+
+.his_head{
+    font-weight: 1000;
+    font-size: 55px;
+}
+
+.his_buttons{
+    margin-top: 3%;
+
+}
+
+.his_bbutton{
+    border-radius: 20px;
+    background-color: black;
+    color:white;
+    border: none;
+    font-size: x-large;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top:10px ;
+    padding-bottom: 10px;
+
+}
+
+
+
+.his_search{
+    font-size: large;
+    padding:0.8%;
+    padding-right: 19%;
+    margin-left: 53%;
+    border-radius: 20px;
+    border: none;
+    box-shadow: 3px 3px 2px black;
+    outline: none;
+}
+
+.radio-buttons{
+    display: flex;
+    flex-direction: column;
+}
+
+
+.his_grid{
+    display: grid;
+    grid-template-columns: 1fr 6fr ;
+}
+
+.radio-button{
+    background-color: white;
+    outline: none;
+    border: none;
+    font-size: xx-large;
+    appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.radio-button:hover{
+    background-color:aliceblue;
+}
+
+.underline{
+    text-decoration:underline ;
+}
