@@ -88,7 +88,6 @@ function LoginPage() {
   };
 
   console.log("Hello, World!");
-
   const validateEmail = (email) => {
     // Basic email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
