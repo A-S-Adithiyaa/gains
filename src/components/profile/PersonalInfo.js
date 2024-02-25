@@ -128,9 +128,7 @@ function PersonalInfo() {
                 </Col>
               </Row>
             </Row>
-            <Row>
-              <h1>fkjashdkfjadsfkhj</h1>
-            </Row>
+            <Row></Row>
           </Container>
         </div>
       ) : (
