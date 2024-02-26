@@ -46,7 +46,7 @@
     font-size: large;
     padding:0.8%;
     padding-right: 19%;
-    margin-left: 53%;
+    margin-left: 66%;
     border-radius: 20px;
     border: none;
     box-shadow: 3px 3px 2px black;
@@ -153,4 +153,12 @@
     margin-top: 25%;
     margin-bottom: 25%;
 
+}
+
+.his_delete{
+    border-radius: 20px;
+    background-color: red;
+    outline: none;
+    padding:10px;
+    font-weight: bolder;
 }

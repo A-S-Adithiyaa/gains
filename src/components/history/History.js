@@ -1,6 +1,8 @@
 import React from "react";
 import "./History.css";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 
 
 const History = () => {
@@ -9,6 +11,7 @@ const History = () => {
     var year = date.getFullYear();
     var month = date.getMonth() + 1; 
     var day = date.getDate();
+    const navigate=useNavigate("");
 
     var action=[
         {
@@ -33,6 +36,12 @@ const History = () => {
         }
     ]
 
+    const [checks,setChecks]=useState([]);
+
+    const handleDelete=()=>{
+        console.log(checks);
+    }
+
     
     return ( 
         <div>
@@ -50,6 +59,7 @@ const History = () => {
                             <p id="radio" className={option=="This Week"?"underline":""} onClick={()=>setOption("This Week")}>This Week</p>
                             <p id="radio" className={option=="This Month"?"underline":""} onClick={()=>setOption("This Month")}>This Month</p>
                             <p id="radio" className={option=="All"?"underline":""} onClick={()=>setOption("All")}>All</p>
+                            {checks.length>0? <button id="radio" className="his_delete" type='button' onClick={()=>handleDelete()}>Delete</button>:null}
                         </div>
                         <div className="his_table">
                             <p className="today">{"Today " + day + "-" + month + "-" +year}</p>
@@ -64,19 +74,46 @@ const History = () => {
                                 {action.map((act)=>(
                                     
                                     <div className={act.id%2==0?"grid_table-dark":"grid_table-light"}>
-                                        <input className="checkbox" type="checkbox"></input>
+                                        <input className="checkbox" type="checkbox" onChange={(e)=>{
+                                            e.target.checked?setChecks(checks=>[...checks,act.id]):setChecks(checks=>checks.filter(item=>item!==act.id))
+                                        }}></input>
                                         <div className="titles">{act.title}</div>
                                         <div>
-                                            {act.actions[0]?<button className={act.id%2==0?"but-light":"but-dark"}>Learn</button>:""}
-                                            {act.actions[1]?<button className={act.id%2==0?"but-light":"but-dark"}>Notes</button>:""}
-                                            {act.actions[2]?<button className={act.id%2==0?"but-light":"but-dark"}>Doubts</button>:""}
-                                            {act.actions[3]?<button className={act.id%2==0?"but-light":"but-dark"}>Test</button>:""}   
+                                            {act.actions[0]?<button className={act.id%2==0?"but-light":"but-dark"} onClick={()=>{
+                                                localStorage.setItem("current_topic",act.id)
+                                                navigate("/video")
+                                            }}>Learn</button>:""}
+                                            {act.actions[1]?<button className={act.id%2==0?"but-light":"but-dark"} onClick={()=>{
+                                                localStorage.setItem("current_topic",act.id)
+                                                navigate("/notes")
+                                            }}>Notes</button>:""}
+                                            {act.actions[2]?<button className={act.id%2==0?"but-light":"but-dark"} onClick={()=>{
+                                                localStorage.setItem("current_topic",act.id)
+                                                navigate("/doubts")
+                                            }}>Doubts</button>:""}
+                                            {act.actions[3]?<button className={act.id%2==0?"but-light":"but-dark"} onClick={()=>{
+                                                localStorage.setItem("current_topic",act.id)
+                                                navigate("/assessments")
+                                            }}>Test</button>:""}   
                                         </div>
                                         <div>
-                                            {act.actions[0]?"":<button className={act.id%2==0?"but-light":"but-dark"}>Learn</button>}
-                                            {act.actions[1]?"":<button className={act.id%2==0?"but-light":"but-dark"}>Notes</button>}
-                                            {act.actions[2]?"":<button className={act.id%2==0?"but-light":"but-dark"}>Doubts</button>}
-                                            {act.actions[3]?"":<button className={act.id%2==0?"but-light":"but-dark"}>Test</button>}
+                                            {act.actions[0]?"":<button className={act.id%2==0?"but-light":"but-dark"} onClick={()=>{
+                                                localStorage.setItem("current_topic",act.id)
+                                                navigate("/video")
+                                            }}>Learn</button>}
+                                            {act.actions[1]?"":<button className={act.id%2==0?"but-light":"but-dark"} onClick={()=>{
+                                                localStorage.setItem("current_topic",act.id)
+                                                navigate("/notes")
+                                            }}>Notes</button>}
+                                            {act.actions[2]?"":<button className={act.id%2==0?"but-light":"but-dark"} onClick={()=>{
+                                                localStorage.setItem("current_topic",act.id)
+                                                navigate("/doubts")
+                                            }}>Doubts</button>}
+                                            {act.actions[3]?"":<button className={act.id%2==0?"but-light":"but-dark"}
+                                            onClick={()=>{
+                                                localStorage.setItem("current_topic",act.id)
+                                                navigate("/assessments")
+                                            }}>Test</button>}
                                         </div>
                                     </div>    
                                 ))
