@@ -41,6 +41,8 @@ const History = () => {
     const id=localStorage.getItem("isLoggedIn");
     const [action,setAction]=useState([]);
     const [topics,setTopics]=useState([]);
+    const [filter,setFilter]=useState([]);
+    const [search,setSearch]=useState("");
     // var action=[
     //     {
     //         "id":0,
@@ -82,6 +84,8 @@ const History = () => {
     },[])
 
     useEffect(()=>{
+        setFilter([])
+        setSearch("")
         if(option==="All"){
             setAction(topics);
         }
@@ -129,7 +133,22 @@ const History = () => {
         }
     },[option]);
 
+    const filterHistory=(e)=>{
+        setSearch(e.target.value)
+        console.log(e.target.value)
+        let regex = new RegExp(`^${e.target.value}`, "i"); 
+        setFilter([]);
+        action.map((act)=>{
+            console.log(regex.test(act.topic))
+            if(regex.test(act.topic)){
+                setFilter(filter=>[...filter,act])
+                
+            }
+        })
+        console.log(filter)
 
+
+    }
 
     const [checks,setChecks]=useState([]);
 
@@ -145,7 +164,7 @@ const History = () => {
                     <h1 className="his_head">Search History</h1>
                     <div className="his_buttons"> 
                         <button className="his_bbutton" type="button" onClick={()=> navigate(-1)}>Back</button>
-                        <input className="his_search" type="text" placeholder="Search"/>
+                        <input className="his_search" type="text" placeholder="Search" value={search} onChange={(e)=>filterHistory(e)}/>
                     </div>
                     <div className="his_grid">
                         <div class="radio-buttons" >
@@ -166,7 +185,53 @@ const History = () => {
                                     <div className="head">More Actions</div>
                                 </div>
 
-                                {action.map((act,index)=>(
+                                { filter.length  ===0?action.map((act,index)=>(
+                                    
+                                    <div className={index%2==0?"grid_table-dark":"grid_table-light"}>
+                                        <input className="checkbox" type="checkbox" onChange={(e)=>{
+                                            e.target.checked?setChecks(checks=>[...checks,act.id]):setChecks(checks=>checks.filter(item=>item!==act.id))
+                                        }}></input>
+                                        <div className="titles">{act.topic}</div>
+                                        <div>
+                                            {act.action[0]?<button className={index%2==0?"but-light":"but-dark"} onClick={()=>{
+                                                localStorage.setItem("current_topic",act.id)
+                                                navigate("/video")
+                                            }}>Learn</button>:""}
+                                            {act.action[1]?<button className={index%2==0?"but-light":"but-dark"} onClick={()=>{
+                                                localStorage.setItem("current_topic",act.id)
+                                                navigate("/notes")
+                                            }}>Notes</button>:""}
+                                            {act.action[2]?<button className={index%2==0?"but-light":"but-dark"} onClick={()=>{
+                                                localStorage.setItem("current_topic",act.id)
+                                                navigate("/doubts")
+                                            }}>Doubts</button>:""}
+                                            {act.action[3]?<button className={index%2==0?"but-light":"but-dark"} onClick={()=>{
+                                                localStorage.setItem("current_topic",act.id)
+                                                navigate("/assessments")
+                                            }}>Test</button>:""}   
+                                        </div>
+                                        <div>
+                                            {act.action[0]?"":<button className={index%2==0?"but-light":"but-dark"} onClick={()=>{
+                                                localStorage.setItem("current_topic",act.id)
+                                                navigate("/video")
+                                            }}>Learn</button>}
+                                            {act.action[1]?"":<button className={index%2==0?"but-light":"but-dark"} onClick={()=>{
+                                                localStorage.setItem("current_topic",act.id)
+                                                navigate("/notes")
+                                            }}>Notes</button>}
+                                            {act.action[2]?"":<button className={index%2==0?"but-light":"but-dark"} onClick={()=>{
+                                                localStorage.setItem("current_topic",act.id)
+                                                navigate("/doubts")
+                                            }}>Doubts</button>}
+                                            {act.action[3]?"":<button className={index%2==0?"but-light":"but-dark"}
+                                            onClick={()=>{
+                                                localStorage.setItem("current_topic",act.id)
+                                                navigate("/assessments")
+                                            }}>Test</button>}
+                                        </div>
+                                    </div>    
+                                )):
+                                filter.map((act,index)=>(
                                     
                                     <div className={index%2==0?"grid_table-dark":"grid_table-light"}>
                                         <input className="checkbox" type="checkbox" onChange={(e)=>{

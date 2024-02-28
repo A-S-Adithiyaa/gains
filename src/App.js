@@ -8,10 +8,12 @@ import SignUpPage from "./components/login-signup/SignUpPage";
 import NotesLanding from "./components/notes/NotesLanding";
 import History from "./components/history/History";
 import ProfileLanding from "./components/profile/ProfileLanding";
+import Navbar from "./components/Navbar";
 
 function App() {
   return (
     <>
+      <Navbar/>
       <Routes>
         <Route exact path="/" element={<Landing />}></Route>
         <Route exact path="/assessments" element={<AssessmentLanding />} />

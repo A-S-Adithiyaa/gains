@@ -9,7 +9,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   // <BrowserRouter>
   <React.StrictMode>
-    <NavbarSection />
+    {/* <NavbarSection /> */}
     <HashRouter>
       <App />
     </HashRouter>

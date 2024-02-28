@@ -12,7 +12,8 @@ class GenerateQuestions extends Component {
       generateSummary: false,
       summary: [],
       title:"",
-      tid:localStorage.getItem("current_topic")
+      tid:localStorage.getItem("current_topic"),
+      id:localStorage.getItem('isLoggedIn')
     };
   }
   
@@ -25,47 +26,118 @@ class GenerateQuestions extends Component {
     localStorage.setItem("input", inputValue); // Store input in localStorage
   };
 
-  handleSubmit = async () => {
+  handleSubmit= async()=>{
     this.setState({ loading: true });
-    const id=localStorage.getItem('isLoggedIn')
     const { input } = this.state;
-    const title_res = await axios.post(
-      "http://localhost:5000/generate-title",
-      {
-        context: input,
-      }
-    );
-    console.log(title_res.data);
-    this.setState({
-      title: title_res.data,
-      loading:false
-    });
-
-      fetch("http://localhost:8080/jpa/"+id+"/create-topics",{
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({"topic":title_res.data.title}),
-      })
-        .then(res=>{
-            return res.json();
+    await axios.post("http://localhost:5000/generate-title",
+        {
+          context: input,
         })
-        .then(data=>{
-          localStorage.setItem('current_topic', data);
+        .then((response)=>{
           this.setState({
-            tid:data
-          })
-           console.log(data)
-           this.setState({
-            loading:false
-          });
-        
+                title: response.data.title,
+                loading:false
+              });
         })
-        .catch(function (error) {
+
+    await axios.post("http://localhost:5000/generate_summary",
+    {
+       context: input,
+    })
+    .then((response)=>this.setState({
+      loading: false,
+      generateSummary: true,
+      summary: response.data,
+    })
+    )
+    
+    console.log(input)
+    console.log(this.state.title)
+    await fetch("http://localhost:8080/jpa/"+this.state.id+"/create-topics",{
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({"topic":this.state.title}),
+          })
+            .then(res=>{
+                return res.json();
+            })
+            .then(data=>{
+              localStorage.setItem('current_topic', data);
+              this.setState({
+                tid:data
+              })
+               this.setState({
+                loading:false
+              });
+              this.createNotes(data)
+            })
+            .catch(function (error) {
+                
+                console.log(error);
+            });
+  }
+
+  createNotes=(tid)=>{
+    fetch("http://localhost:8080/jpa/"+tid+"/create-notes",{
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+                            "topic":this.state.title,
+                            "content":this.state.input,
+                            // "summary":this.state.summary
+                          }),
+    })
+    .catch(function (error) {
+      console.log(error);
+      
+    });
+  }
+
+  // handleSubmit = async () => {
+  //   this.setState({ loading: true });
+  //   const id=localStorage.getItem('isLoggedIn')
+  //   const { input } = this.state;
+  //   const title_res = await axios.post(
+  //     "http://localhost:5000/generate-title",
+  //     {
+  //       context: input,
+  //     }
+  //   );
+  //   console.log(title_res.data);
+  //   this.setState({
+  //     title: title_res.data,
+  //     loading:false
+  //   });
+
+  //     fetch("http://localhost:8080/jpa/"+id+"/create-topics",{
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({"topic":title_res.data.title}),
+  //     })
+  //       .then(res=>{
+  //           return res.json();
+  //       })
+  //       .then(data=>{
+  //         localStorage.setItem('current_topic', data);
+  //         this.setState({
+  //           tid:data
+  //         })
+  //          console.log(data)
+  //          this.setState({
+  //           loading:false
+  //         });
+        
+  //       })
+  //       .catch(function (error) {
             
-            console.log(error);
-        });
+  //           console.log(error);
+  //       });
 
     // const response = await axios.post(
     //   "http://localhost:5000/generate_summary",
@@ -79,19 +151,19 @@ class GenerateQuestions extends Component {
     //   summary: response.data,
     // })
 
-    axios.post("http://localhost:5000/generate_summary",
-    {
-      context: input,
-    })
-    .then((response)=>this.setState({
-      loading: false,
-      generateSummary: true,
-      summary: response.data,
-    }))
-    .then(()=>{
-      console.log(this.state.summary)
-      console.log(this.state.tid)
-    })
+    // axios.post("http://localhost:5000/generate_summary",
+    // {
+    //   context: input,
+    // })
+    // .then((response)=>this.setState({
+    //   loading: false,
+    //   generateSummary: true,
+    //   summary: response.data,
+    // }))
+    // .then(()=>{
+    //   console.log(this.state.summary)
+    //   console.log(this.state.tid)
+    // })
     // fetch("http://localhost:8080/jpa/"+this.state.tid+"/create-notes",{
     //   method: 'POST',
     //   headers: {
@@ -120,7 +192,7 @@ class GenerateQuestions extends Component {
 
 
     
-  };
+  // };
 
 
 
