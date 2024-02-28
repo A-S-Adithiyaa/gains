@@ -146,7 +146,7 @@ label {
 }
 
 .nav-link {
-  color: var(--pure-white);
+  /* color: var(--pure-white); */
   margin: 0 20px 0;
   font-size: 18px;
   font-weight: 700;
@@ -322,3 +322,11 @@ li {
    }
 }
 
+
+
+/* Profile Section */
+
+.give-both-margins {
+  margin-top: 10px;
+  margin-bottom: 30px;
+}
