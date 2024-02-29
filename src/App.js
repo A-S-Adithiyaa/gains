@@ -9,19 +9,21 @@ import NotesLanding from "./components/notes/NotesLanding";
 import History from "./components/history/History";
 import ProfileLanding from "./components/profile/ProfileLanding";
 import Navbar from "./components/Navbar";
+import QuestionsLanding from "./components/questions/QuestionsLAnding";
 
 function App() {
   return (
     <>
-      <Navbar/>
+      <Navbar />
       <Routes>
         <Route exact path="/" element={<Landing />}></Route>
         <Route exact path="/assessments" element={<AssessmentLanding />} />
         <Route exact path="/notes" element={<NotesLanding />} />
         <Route exact path="/login" element={<LoginPage />} />
         <Route exact path="/signup" element={<SignUpPage />} />
-        <Route exact path="/history" element={<History/>} />
+        <Route exact path="/history" element={<History />} />
         <Route exact path="/profile" element={<ProfileLanding />} />
+        <Route exact path="/questions" element={<QuestionsLanding />} />
       </Routes>
     </>
   );

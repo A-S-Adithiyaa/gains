@@ -25,6 +25,31 @@ function LoginPage() {
     ]);
   }, []);
 
+  const demoLogin = (event) => {
+    event.preventDefault();
+
+    // Hardcoded credentials for demonstration
+    const hardcodedEmail = "info@gains.com";
+    const hardcodedPassword = "123456";
+
+    // Check if the provided email and password match the hardcoded values
+    if (email === hardcodedEmail && password === hardcodedPassword) {
+      // If the credentials match, simulate a successful login
+      setIsLoading(true);
+      setTimeout(() => {
+        toast("Successfully Logged In");
+        localStorage.setItem("isLoggedIn", true);
+        navigate("/");
+        setEmail("");
+        setPassword("");
+        setIsLoading(false);
+      }, 1000); // Simulating network delay
+    } else {
+      // If the credentials don't match, show an error message
+      toast.error("Invalid email or password");
+    }
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -111,7 +136,7 @@ function LoginPage() {
             </div>
           </div>
           <div className="Auth-form-container">
-            <form className="Auth-form" onSubmit={handleSubmit}>
+            <form className="Auth-form" onSubmit={demoLogin}>
               <div className="Auth-form-content">
                 <h3 className="Auth-form-title">Sign In</h3>
                 <div className="text-center">

@@ -330,3 +330,50 @@ li {
   margin-top: 10px;
   margin-bottom: 30px;
 }
+
+
+/* Chat box */
+
+
+.message {
+  padding: 5px;
+  margin: 5px;
+  clear: both;
+}
+
+.message-text{
+  margin: 0 10px 0 10px
+}
+.message-list {
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 54px;
+  background-color: var(--pure-white);
+  height: 500px; /* Set a fixed height for the message list */
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
+.message.left {
+  text-align: left;
+  width: 40%;
+  background-color: var(--pure-white); /* Light grey background color for user1 messages */
+  border-bottom-left-radius: 15px; /* Rounded top left corner */
+  border-top-right-radius: 15px; /* Rounded top right corner */
+  border-bottom-right-radius: 15px; /* Rounded bottom right corner */
+  box-shadow: 2px 2px 20px -2px rgba(60,51,176,0.2);
+  color: rgba(60,51,176,1);
+}
+
+.message.right {
+  text-align: right;
+  background-color: #5850c0; /* Green background color for user2 messages */
+  color: var(--pure-white);
+  box-shadow: 2px 2px 20px rgba(60,51,176,0.2),
+              inset -10px -10px 55px rgba(255,255,255,0.1);
+  float: right; /* Float the message to the right */
+  clear: none; /* Remove the clear property for user2 messages */
+  width: 40%; /* Set a maximum width for the message */
+  border-bottom-left-radius: 15px; /* Rounded top left corner */
+  border-top-left-radius: 15px; /* Rounded top right corner */
+  border-bottom-right-radius: 15px; /* Rounded bottom right corner */
+}

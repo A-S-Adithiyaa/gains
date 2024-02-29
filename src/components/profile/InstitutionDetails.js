@@ -85,7 +85,7 @@ function InstitutionDetails() {
                 </Row>
               </Row>
             </Row>
-            <Button type="success">Save</Button>
+            <Button variant="success">Save</Button>
           </Container>
         </div>
       ) : (

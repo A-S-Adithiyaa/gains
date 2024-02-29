@@ -42,7 +42,7 @@ function NavbarSection() {
               <Nav.Link className="nav-links" href="#/assessments">
                 ASSESSMENTS
               </Nav.Link>
-              <Nav.Link className="nav-links" href="#action4">
+              <Nav.Link className="nav-links" href="#/questions">
                 QUESTIONS
               </Nav.Link>
             </Nav>
@@ -72,15 +72,8 @@ function NavbarSection() {
                   title={<IoIosContact size={30} />}
                   align="end"
                 >
-                  <NavDropdown.Item href="#action/3.1">
-                    Profile
-                  </NavDropdown.Item>
-                  
                   <NavDropdown.Item href="#/profile">Profile</NavDropdown.Item>
-                  <NavDropdown.Item href="#/history">
-                    History
-                  </NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.3"></NavDropdown.Item>
+                  <NavDropdown.Item href="#/history">History</NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item
                     onClick={() => logout()}
