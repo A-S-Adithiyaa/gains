@@ -514,6 +514,10 @@ def generate_title():
    context=data['context']
    title=generate_context_title(context)
    return jsonify(title)
+   
+@app.route('/mobile-testing')
+def mobile_testing():
+   return "Yes, It works on mobile too!!!"
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0',debug=True)

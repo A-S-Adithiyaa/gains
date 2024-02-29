@@ -156,3 +156,40 @@
     padding:5px;
     font-weight: bold;
 }
+
+.his_delete_back{
+    background-color: rgba(0,0,0,0.5);
+    min-height:100vh;
+    width:100%;
+    font-size: xx-large;
+    position:fixed;
+    top:0;
+    left:0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.his_del_body{
+    background-color: #d9d9d9;
+    padding:2%;
+    border-radius: 10px;
+    
+}
+
+.his_del_btns{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.his_btns{
+    margin:5%;
+    background-color: #888686;
+    color: white;
+    font-weight: bolder;
+}
+
+.his_btns:hover{
+    color: #888686;
+    background-color: white;
+}

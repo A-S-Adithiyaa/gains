@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import "./History.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const History = () => {
     const [option,setOption]=useState("");
@@ -43,6 +43,8 @@ const History = () => {
     const [topics,setTopics]=useState([]);
     const [filter,setFilter]=useState([]);
     const [search,setSearch]=useState("");
+    const [del,setDel]=useState(false);
+    const [refresh,setRefresh]=useState(0);
     // var action=[
     //     {
     //         "id":0,
@@ -67,6 +69,14 @@ const History = () => {
     // ]
 
     useEffect(()=>{
+
+        const isLoggedIn = localStorage.getItem("isLoggedIn");
+
+    
+        if (!isLoggedIn) {
+            navigate("/login");
+            }
+
         fetch("http://localhost:8080/jpa/"+id+"/get-topics")
         .then(res=>{
             return res.json();
@@ -81,7 +91,7 @@ const History = () => {
             
             console.log(error);
         });
-    },[])
+    },[refresh])
 
     useEffect(()=>{
         setFilter([])
@@ -152,15 +162,33 @@ const History = () => {
 
     const [checks,setChecks]=useState([]);
 
-    const handleDelete=()=>{
-        console.log(checks);
+    const handleDelete= async ()=>{
+        try {
+            
+            const response = await fetch("http://localhost:8080/jpa/delete-topics", {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(checks)
+            });
+      
+            const responseData = await response.text();
+            toast(responseData)
+            setDel(false)
+            refresh===0?setRefresh(1):setRefresh(0)
+            setChecks([])
+          } catch (error) {
+            console.error('Error sending data to backend:', error);
+          }
+        
     }
 
     
     return ( 
         <div>
             <div className="his_back">
-                <div className="his_body">
+               <div className="his_body">
                     <h1 className="his_head">Search History</h1>
                     <div className="his_buttons"> 
                         <button className="his_bbutton" type="button" onClick={()=> navigate(-1)}>Back</button>
@@ -173,7 +201,7 @@ const History = () => {
                             <p id="radio" className={option=="This Week"?"underline":""} onClick={()=>setOption("This Week")}>This Week</p>
                             <p id="radio" className={option=="This Month"?"underline":""} onClick={()=>setOption("This Month")}>This Month</p>
                             <p id="radio" className={option=="All"||option==""?"underline":""} onClick={()=>setOption("All")}>All</p>
-                            {checks.length>0? <button id="radio" className="his_delete" type='button' onClick={()=>handleDelete()}>Delete</button>:null}
+                            {checks.length>0? <button id="radio" className="his_delete" type='button' onClick={()=>setDel(true)}>Delete</button>:null}
                         </div>
                         <div className="his_table">
                             <p className="today">{"Today " + day + "-" + month + "-" +year}</p>
@@ -283,6 +311,19 @@ const History = () => {
                         </div>
                     </div>
                 </div>
+                {del&&<div className="his_delete_back">
+                    <div className="his_del_body">
+                        <p>Are you sure you want to delete?</p>
+                        <div className="his_del_btns">
+                            <button className="his_btns" onClick={()=>{
+                                                                        setDel(false)
+                                                                        
+                                                                        }}>Cancel</button>
+                            <button className="his_btns" onClick={handleDelete}>Delete</button>
+                        </div>
+                    </div>
+                    
+                </div>}    
             </div>
         </div>
      );
