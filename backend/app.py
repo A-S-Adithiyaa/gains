@@ -29,6 +29,7 @@ import time
 import os 
 import torch
 from transformers import AutoTokenizer, T5ForConditionalGeneration
+from transformers import pipeline
 
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -40,128 +41,128 @@ print(device)
 s2v = Sense2Vec().from_disk("./s2v_old")
 
 
-with open('t5_summary_model.pkl', 'rb') as f:
-    summary_model = pickle.load(f)
-print("Summary model found in the disc, model is loaded successfully.")
+# with open('t5_summary_model.pkl', 'rb') as f:
+#     summary_model = pickle.load(f)
+# print("Summary model found in the disc, model is loaded successfully.")
 
-with open('t5_summary_tokenizer.pkl', 'rb') as f:
-    summary_tokenizer = pickle.load(f)
-print("Summary tokenizer found in the disc and is loaded successfully.")
+# with open('t5_summary_tokenizer.pkl', 'rb') as f:
+#     summary_tokenizer = pickle.load(f)
+# print("Summary tokenizer found in the disc and is loaded successfully.")
 
-with open('t5_question_model.pkl', 'rb') as f:
-    question_model = pickle.load(f)
-print("Question model found in the disc, model is loaded successfully.")
+# with open('t5_question_model.pkl', 'rb') as f:
+#     question_model = pickle.load(f)
+# print("Question model found in the disc, model is loaded successfully.")
 
-with open('t5_question_tokenizer.pkl', 'rb') as f:
-    question_tokenizer = pickle.load(f)
-print("Question tokenizer found in the disc, model is loaded successfully.")
+# with open('t5_question_tokenizer.pkl', 'rb') as f:
+#     question_tokenizer = pickle.load(f)
+# print("Question tokenizer found in the disc, model is loaded successfully.")
 
-summary_model = summary_model.to(device)
-question_model = question_model.to(device)
+# summary_model = summary_model.to(device)
+# question_model = question_model.to(device)
 
-with open("sentence_transformer_model.pkl",'rb') as f:
-    sentence_transformer_model = pickle.load(f)
+# with open("sentence_transformer_model.pkl",'rb') as f:
+#     sentence_transformer_model = pickle.load(f)
 # print("Sentence transformer model found in the disc, model is loaded successfully.")
 
 #we need to download the 2015 trained on reddit sense2vec model as it is shown to give better results than the 2019 one.
 s2v = Sense2Vec().from_disk('s2v_old')
 
 #getitng the summary model and its tokenizer
-# if os.path.exists("t5_summary_model.pkl"):
-#     with open('t5_summary_model.pkl', 'rb') as f:
-#         summary_model = pickle.load(f)
-#     print("Summary model found in the disc, model is loaded successfully.")
+if os.path.exists("t5_summary_model.pkl"):
+    with open('t5_summary_model.pkl', 'rb') as f:
+        summary_model = pickle.load(f)
+    print("Summary model found in the disc, model is loaded successfully.")
 
-# else:
-#     print("Summary model does not exists in the path specified, downloading the model from web....")
-#     start_time = time.time()
-#     summary_model = T5ForConditionalGeneration.from_pretrained('t5-base')
-#     end_time = time.time()
+else:
+    print("Summary model does not exists in the path specified, downloading the model from web....")
+    start_time = time.time()
+    summary_model = T5ForConditionalGeneration.from_pretrained('t5-base')
+    end_time = time.time()
 
-#     print("downloaded the summary model in ",(end_time-start_time)/60," min , now saving it to disc...")
+    print("downloaded the summary model in ",(end_time-start_time)/60," min , now saving it to disc...")
 
-#     with open("t5_summary_model.pkl", 'wb') as f:
-#         pickle.dump(summary_model,f)
+    with open("t5_summary_model.pkl", 'wb') as f:
+        pickle.dump(summary_model,f)
     
-#     print("Done. Saved the model to disc.")
+    print("Done. Saved the model to disc.")
 
-# if os.path.exists("t5_summary_tokenizer.pkl"):
-#     with open('t5_summary_tokenizer.pkl', 'rb') as f:
-#         summary_tokenizer = pickle.load(f)
-#     print("Summary tokenizer found in the disc and is loaded successfully.")
-# else: 
-#     print("Summary tokenizer does not exists in the path specified, downloading the model from web....")
+if os.path.exists("t5_summary_tokenizer.pkl"):
+    with open('t5_summary_tokenizer.pkl', 'rb') as f:
+        summary_tokenizer = pickle.load(f)
+    print("Summary tokenizer found in the disc and is loaded successfully.")
+else: 
+    print("Summary tokenizer does not exists in the path specified, downloading the model from web....")
 
-#     start_time = time.time()
-#     summary_tokenizer = T5Tokenizer.from_pretrained('t5-base')
-#     end_time = time.time()
+    start_time = time.time()
+    summary_tokenizer = T5Tokenizer.from_pretrained('t5-base')
+    end_time = time.time()
 
-#     print("downloaded the summary tokenizer in ",(end_time-start_time)/60," min , now saving it to disc...")
+    print("downloaded the summary tokenizer in ",(end_time-start_time)/60," min , now saving it to disc...")
 
-#     with open("t5_summary_tokenizer.pkl",'wb') as f:
-#         pickle.dump(summary_tokenizer,f)
+    with open("t5_summary_tokenizer.pkl",'wb') as f:
+        pickle.dump(summary_tokenizer,f)
 
-#     print("Done. Saved the tokenizer to disc.")
+    print("Done. Saved the tokenizer to disc.")
 
 
-# #Getting question model and tokenizer
-# if os.path.exists("t5_question_model.pkl"):
-#     with open('t5_question_model.pkl', 'rb') as f:
-#         question_model = pickle.load(f)
-#     print("Question model found in the disc, model is loaded successfully.")
-# else:
-#     print("Question model does not exists in the path specified, downloading the model from web....")
-#     start_time= time.time()
-#     question_model = T5ForConditionalGeneration.from_pretrained('ramsrigouthamg/t5_squad_v1')
-#     end_time = time.time()
+#Getting question model and tokenizer
+if os.path.exists("t5_question_model.pkl"):
+    with open('t5_question_model.pkl', 'rb') as f:
+        question_model = pickle.load(f)
+    print("Question model found in the disc, model is loaded successfully.")
+else:
+    print("Question model does not exists in the path specified, downloading the model from web....")
+    start_time= time.time()
+    question_model = T5ForConditionalGeneration.from_pretrained('ramsrigouthamg/t5_squad_v1')
+    end_time = time.time()
 
-#     print("downloaded the question model in ",(end_time-start_time)/60," min , now saving it to disc...")
+    print("downloaded the question model in ",(end_time-start_time)/60," min , now saving it to disc...")
 
-#     with open("t5_question_model.pkl", 'wb') as f:
-#         pickle.dump(question_model,f)
+    with open("t5_question_model.pkl", 'wb') as f:
+        pickle.dump(question_model,f)
     
-#     print("Done. Saved the model to disc.")
+    print("Done. Saved the model to disc.")
 
-# if os.path.exists("t5_question_tokenizer.pkl"):
-#     with open('t5_question_tokenizer.pkl', 'rb') as f:
-#         question_tokenizer = pickle.load(f)
-#     print("Question tokenizer found in the disc, model is loaded successfully.")
-# else:
-#     print("Question tokenizer does not exists in the path specified, downloading the model from web....")
+if os.path.exists("t5_question_tokenizer.pkl"):
+    with open('t5_question_tokenizer.pkl', 'rb') as f:
+        question_tokenizer = pickle.load(f)
+    print("Question tokenizer found in the disc, model is loaded successfully.")
+else:
+    print("Question tokenizer does not exists in the path specified, downloading the model from web....")
 
-#     start_time = time.time()
-#     question_tokenizer = T5Tokenizer.from_pretrained('ramsrigouthamg/t5_squad_v1')
-#     end_time=time.time()
+    start_time = time.time()
+    question_tokenizer = T5Tokenizer.from_pretrained('ramsrigouthamg/t5_squad_v1')
+    end_time=time.time()
 
-#     print("downloaded the question tokenizer in ",(end_time-start_time)/60," min , now saving it to disc...")
+    print("downloaded the question tokenizer in ",(end_time-start_time)/60," min , now saving it to disc...")
 
-#     with open("t5_question_tokenizer.pkl",'wb') as f:
-#         pickle.dump(question_tokenizer,f)
+    with open("t5_question_tokenizer.pkl",'wb') as f:
+        pickle.dump(question_tokenizer,f)
 
-#     print("Done. Saved the tokenizer to disc.")
+    print("Done. Saved the tokenizer to disc.")
 
-# #Loading the models in to GPU if available
-# summary_model = summary_model.to(device)
-# question_model = question_model.to(device)
+#Loading the models in to GPU if available
+summary_model = summary_model.to(device)
+question_model = question_model.to(device)
 
-# #Getting the sentence transformer model and its tokenizer
-# # paraphrase-distilroberta-base-v1
-# if os.path.exists("sentence_transformer_model.pkl"):
-#     with open("sentence_transformer_model.pkl",'rb') as f:
-#         sentence_transformer_model = pickle.load(f)
-#     print("Sentence transformer model found in the disc, model is loaded successfully.")
-# else:
-#     print("Sentence transformer model does not exists in the path specified, downloading the model from web....")
-#     start_time=time.time()
-#     sentence_transformer_model = SentenceTransformer("sentence-transformers/msmarco-distilbert-base-v2")
-#     end_time=time.time()
+#Getting the sentence transformer model and its tokenizer
+# paraphrase-distilroberta-base-v1
+if os.path.exists("sentence_transformer_model.pkl"):
+    with open("sentence_transformer_model.pkl",'rb') as f:
+        sentence_transformer_model = pickle.load(f)
+    print("Sentence transformer model found in the disc, model is loaded successfully.")
+else:
+    print("Sentence transformer model does not exists in the path specified, downloading the model from web....")
+    start_time=time.time()
+    sentence_transformer_model = SentenceTransformer("sentence-transformers/msmarco-distilbert-base-v2")
+    end_time=time.time()
 
-#     print("downloaded the sentence transformer in ",(end_time-start_time)/60," min , now saving it to disc...")
+    print("downloaded the sentence transformer in ",(end_time-start_time)/60," min , now saving it to disc...")
 
-#     with open("sentence_transformer_model.pkl",'wb') as f:
-#         pickle.dump(sentence_transformer_model,f)
+    with open("sentence_transformer_model.pkl",'wb') as f:
+        pickle.dump(sentence_transformer_model,f)
 
-#     print("Done saving to disc.")
+    print("Done saving to disc.")
 
 def set_seed(seed: int):
     random.seed(seed)
@@ -488,10 +489,20 @@ def generate_context_title(context):
 
   return {"title": title}
 
+def answer_question(context, question):
+    model_name = "deepset/roberta-base-squad2"
+
+    nlp = pipeline('question-answering', model=model_name, tokenizer=model_name)
+    QA_input = {
+        'question': question,
+        'context': context
+    }
+    res = nlp(QA_input)
+    
+    return res['answer']
+
 app = Flask(__name__)
 CORS(app)
-
-# model = TransformersQG(model='lmqg/t5-base-squad-qg', model_ae='lmqg/t5-base-squad-ae')
 
 @app.route('/generate_qa', methods=['POST'])
 def generate_qa():
@@ -515,5 +526,25 @@ def generate_title():
    title=generate_context_title(context)
    return jsonify(title)
 
+@app.route('/question-answering', methods=['POST'])
+def question_answering():
+   data=request.get_json()
+   context=data['context']
+   question=data['question']
+   answer=answer_question(context, question)
+   return jsonify(answer)
+
+@app.route('/api/sendMessage', methods=['POST'])
+def send_message():
+    data = request.json
+    message_from_user2 = data.get('message', '')
+    
+    # Perform any processing or logic here
+    # For demonstration, we'll simply return a response message for user1
+    response_message_for_user1 = f'Response message for: {message_from_user2}'
+    
+    return jsonify({'message': response_message_for_user1})
+
 if __name__ == '__main__':
     app.run(debug=True)
+    
