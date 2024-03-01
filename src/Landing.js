@@ -4,6 +4,7 @@ import EducationSection from "./components/EducationSection";
 import CardSection from "./components/CardSection";
 import "./App.css";
 
+
 class Landing extends Component {
   render() {
     return (

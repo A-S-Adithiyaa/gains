@@ -1,6 +1,9 @@
-import React, { Component } from "react";
+  import React, { Component } from "react";
 import { Button, Col, Container, Form, Row, Stack } from "react-bootstrap";
 import { IoIosSend } from "react-icons/io";
+import axios from "axios";
+import { CgAddR } from "react-icons/cg";
+import '../notes/notes.css';
 
 const userIcons = {
   user1: "images/bot.png",
@@ -23,6 +26,22 @@ class QuestionAnswering extends Component {
       tid: localStorage.getItem("current_topic"),
       id: localStorage.getItem("isLoggedIn"),
     };
+
+    
+  }
+
+  componentDidMount(){
+    if(this.state.tid!=null){
+      axios.get("http://localhost:8080/jpa/"+this.state.tid+"/get-doubt")
+    .then(response=>{
+      this.setState({
+        messages:response.data
+      })
+      console.log(response.data)
+      
+    })
+    .catch(error=>console.log(error))
+    }
   }
 
   handleInputChange = (e) => {
@@ -30,7 +49,17 @@ class QuestionAnswering extends Component {
     this.setState({
       input: inputValue,
     });
+    if(this.state.tid!==null){
+      fetch("http://localhost:8080/jpa/"+this.state.tid+"/edit-content", {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(e.target.value ),
+        })
+        .catch(error=>console.log(error))
     localStorage.setItem("input", inputValue);
+    }
   };
 
   handleQuestionChange = (e) => {
@@ -42,6 +71,52 @@ class QuestionAnswering extends Component {
 
     // Make a POST request to the API
     try {
+
+      if(this.state.tid===null){
+        await axios.post("http://localhost:5000/generate-title", {
+        context: input,
+      })
+      .then((response) => {
+        this.setState({
+          title: response.data.title,
+          loading: false,
+        })
+
+        fetch(
+          "http://localhost:8080/jpa/" + this.state.id + "/create-topics",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ 
+              topic: response.data.title ,
+              content: input,
+            }),
+          }
+        )
+          .then((res) => {
+            return res.json();
+          })
+          .then((data) => {
+            localStorage.setItem("current_topic", data);
+            this.setState({
+              tid: data,
+            });
+            this.setState({
+              loading: false,
+            });
+  
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      });
+      
+      
+      }
+
+
       const response = await fetch("http://localhost:5000/question-answering", {
         method: "POST",
         headers: {
@@ -52,7 +127,25 @@ class QuestionAnswering extends Component {
 
       if (response.ok) {
         const data = await response.json();
-        // Handle the response data as needed
+        
+        await fetch("http://localhost:8080/jpa/"+this.state.tid+"/create-doubt", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({text: question, sender:"user2" }),
+        })
+        .catch(error=>console.log(error))
+
+        await fetch("http://localhost:8080/jpa/"+this.state.tid+"/create-doubt", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({text: data, sender:"user1" }),
+        })
+        .catch(error=>console.log(error))
+
         this.setState((prevState) => ({
           messages: [
             ...prevState.messages,
@@ -68,6 +161,9 @@ class QuestionAnswering extends Component {
     } catch (error) {
       console.error("Error:", error);
     }
+    console.log(question);
+    console.log(this.state.messages)
+
   };
 
   render() {
@@ -128,6 +224,7 @@ class QuestionAnswering extends Component {
                     onChange={(e) =>
                       this.setState({ question: e.target.value })
                     }
+                    onKeyDown={(e)=>e.key==='Enter'?this.handleSubmit():""}
                   />
                   <Button variant="success" onClick={this.handleSubmit}>
                     <IoIosSend />
@@ -137,6 +234,17 @@ class QuestionAnswering extends Component {
             </Col>
           </Row>
         </Container>
+        <Button  className="new" onClick={()=>{
+          this.setState({
+            messages:[],
+            tid:null
+          })
+          localStorage.removeItem("current_topic")
+          localStorage.removeItem("input")
+          window.location.reload();
+        }}>
+              <CgAddR size={40} />
+        </Button>
       </>
     );
   }

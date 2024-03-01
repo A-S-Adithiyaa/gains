@@ -41,7 +41,7 @@ function SignUpPage() {
           .then(function (response) {
             console.log(response);
             if (response.data!=="Account created") {
-              throw new Error("Failed to sign up");
+              throw new Error(response.data);
             }
             toast("Account Created")
             navigate('/login');

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
+;
 
 function TakeAssessment({ mcqQuestions }) {
   const [score, setScore] = useState(0);
@@ -21,6 +22,7 @@ function TakeAssessment({ mcqQuestions }) {
   };
 
   return (
+    <>
     <Container>
       <Row>
         <Col>
@@ -64,6 +66,8 @@ function TakeAssessment({ mcqQuestions }) {
         </Row>
       )}
     </Container>
+    
+    </>
   );
 }
 

@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Container, Row, Col, Form, Button, Image } from "react-bootstrap";
 import ListGroup from "react-bootstrap/ListGroup";
 import axios from "axios";
+import { CgAddR } from "react-icons/cg";
+import './notes.css';
 
 class GenerateQuestions extends Component {
   constructor(props) {
@@ -22,13 +24,24 @@ class GenerateQuestions extends Component {
     this.setState({
       input: inputValue,
     });
+    if(this.state.tid!==null){
+      fetch("http://localhost:8080/jpa/"+this.state.tid+"/edit-content", {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(event.target.value ),
+        })
+        .catch(error=>console.log(error))
+    }
     localStorage.setItem("input", inputValue); // Store input in localStorage
   };
 
   handleSubmit = async () => {
     this.setState({ loading: true });
     const { input } = this.state;
-    await axios
+    if(this.state.tid===null){
+      await axios
       .post("http://localhost:5000/generate-title", {
         context: input,
       })
@@ -36,8 +49,40 @@ class GenerateQuestions extends Component {
         this.setState({
           title: response.data.title,
           loading: false,
-        });
+        })
+
+        fetch(
+          "http://localhost:8080/jpa/" + this.state.id + "/create-topics",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ 
+              topic: response.data.title ,
+              content: this.state.input,}),
+          }
+        )
+          .then((res) => {
+            return res.json();
+          })
+          .then((data) => {
+            localStorage.setItem("current_topic", data);
+            this.setState({
+              tid: data,
+            });
+            this.setState({
+              loading: false,
+            });
+            !this.state.generateSummary?this.createNotes(data):this.editNotes(data);
+          })
+          .catch(function (error) {
+            console.log(error);
+          }); 
       });
+
+      
+    }
 
     await axios
       .post("http://localhost:5000/generate_summary", {
@@ -53,32 +98,7 @@ class GenerateQuestions extends Component {
 
     console.log(input);
     console.log(this.state.title);
-    await fetch(
-      "http://localhost:8080/jpa/" + this.state.id + "/create-topics",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ topic: this.state.title }),
-      }
-    )
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        localStorage.setItem("current_topic", data);
-        this.setState({
-          tid: data,
-        });
-        this.setState({
-          loading: false,
-        });
-        this.createNotes(data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    
   };
 
   createNotes = (tid) => {
@@ -89,13 +109,26 @@ class GenerateQuestions extends Component {
       },
       body: JSON.stringify({
         topic: this.state.title,
-        content: this.state.input,
         // "summary":this.state.summary
       }),
     }).catch(function (error) {
       console.log(error);
     });
   };
+
+  editNotes = (tid)=>{
+    fetch("http://localhost:8080/jpa/" + tid + "/edit-notes", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        // "summary":this.state.summary
+      }),
+    }).catch(function (error) {
+      console.log(error);
+    });
+  }
 
   // handleSubmit = async () => {
   //   this.setState({ loading: true });
@@ -254,6 +287,13 @@ class GenerateQuestions extends Component {
             </Col>
           </Row>
         </Container>
+        <Button  className="new" onClick={()=>{
+          localStorage.removeItem("current_topic")
+          localStorage.removeItem("input")
+          window.location.reload();
+        }}>
+              <CgAddR size={40} />
+        </Button>
       </>
     );
   }

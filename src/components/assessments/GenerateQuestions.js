@@ -5,6 +5,8 @@ import QuestionCard from "./components/QuestionCard";
 import { MainApp } from "./components/PageElements/MainApp";
 import { theme } from "./data/AppTheme";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
+import { CgAddR } from "react-icons/cg";
+import '../notes/notes.css';
 
 const GlobalStyle = createGlobalStyle`
   body{
@@ -117,6 +119,13 @@ class GenerateQuestions extends Component {
           </ThemeProvider>
           // <TakeAssessment questions={questionsAndAnswers} />
         )}
+        <Button  className="new" onClick={()=>{
+          localStorage.removeItem("current_topic")
+          localStorage.removeItem("input")
+          window.location.reload();
+        }}>
+          <CgAddR size={40} />
+      </Button>
       </>
     );
   }

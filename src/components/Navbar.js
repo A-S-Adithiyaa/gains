@@ -7,7 +7,9 @@ import Offcanvas from "react-bootstrap/Offcanvas";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { IoIosContact } from "react-icons/io";
 
+
 function NavbarSection() {
+  
   const isLoggedIn = localStorage.getItem("isLoggedIn") || false;
 
   const logout = () => {
