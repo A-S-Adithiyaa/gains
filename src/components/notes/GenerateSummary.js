@@ -19,6 +19,20 @@ class GenerateQuestions extends Component {
     };
   }
 
+  componentDidMount(){
+    if(this.state.tid!=null){
+      axios.get("http://localhost:8080/jpa/"+this.state.tid+"/get-notes")
+    .then(response=>{
+      this.setState({
+        summary:response.data 
+      })
+      console.log(response.data)
+      
+    })
+    .catch(error=>console.log(error))
+    }
+  }
+
   handleInputChange = (event) => {
     const inputValue = event.target.value;
     this.setState({
@@ -74,34 +88,40 @@ class GenerateQuestions extends Component {
             this.setState({
               loading: false,
             });
-            !this.state.generateSummary?this.createNotes(data):this.editNotes(data);
+            this.generateSumm(data);
           })
           .catch(function (error) {
             console.log(error);
           }); 
       });
-
-      
+ 
     }
-
-    await axios
-      .post("http://localhost:5000/generate_summary", {
-        context: input,
-      })
-      .then((response) =>
-        this.setState({
-          loading: false,
-          generateSummary: true,
-          summary: response.data,
-        })
-      );
-
-    console.log(input);
-    console.log(this.state.title);
+    else{
+      this.generateSumm(this.state.tid,true);
+    }
     
   };
 
-  createNotes = (tid) => {
+ 
+  generateSumm=(tid,val)=>{
+    axios
+    .post("http://localhost:5000/generate_summary", {
+      context: this.state.input,
+    })
+    .then((response) =>{
+      this.setState({
+        loading: false,
+        generateSummary: true,
+        summary: response.data,
+      })
+
+      !val?this.createNotes(response.data,tid):this.editNotes(response.data,tid);
+    } 
+);
+  }
+
+  createNotes = (data,tid) => {
+    console.log(data);
     fetch("http://localhost:8080/jpa/" + tid + "/create-notes", {
       method: "POST",
       headers: {
@@ -109,21 +129,21 @@ class GenerateQuestions extends Component {
       },
       body: JSON.stringify({
         topic: this.state.title,
-        // "summary":this.state.summary
+        summary:data.join("")
       }),
     }).catch(function (error) {
       console.log(error);
     });
   };
 
-  editNotes = (tid)=>{
+  editNotes = (data,tid)=>{
     fetch("http://localhost:8080/jpa/" + tid + "/edit-notes", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        // "summary":this.state.summary
+        summary:data.join("")
       }),
     }).catch(function (error) {
       console.log(error);
