@@ -15,6 +15,7 @@ function PersonalInfo() {
   const [userData, setUserData] = useState(null);
   const [username, setUsername] = useState("");
   const [editOption, setEditOption] = useState(false);
+  const [newImage, setNewImage] = useState(null);
 
   useEffect(() => {
     const hardcodedUserData = {
@@ -62,6 +63,19 @@ function PersonalInfo() {
     }
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      setNewImage(reader.result);
+    };
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <div>
       {userData ? (
@@ -86,11 +100,30 @@ function PersonalInfo() {
               </Stack>
             </Row>
             <Row className="justify-content-center give-both-margins">
+              {editOption && (
+                <input
+                  id="file-upload"
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  style={{ display: "none" }}
+                />
+              )}
+
               <Image
-                style={{ width: 200, height: 200, borderRadius: 200 / 2 }}
-                source={userData.image}
+                style={{
+                  width: 200,
+                  height: 200,
+                  borderRadius: 200 / 2,
+                  cursor: "pointer",
+                }}
+                source={newImage ? newImage : userData.image}
+                onClick={() =>
+                  editOption && document.getElementById("file-upload").click()
+                }
               />
             </Row>
+
             <Row className="give-both-margins">
               <Row>
                 <Col sm={6}>

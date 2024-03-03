@@ -40,6 +40,16 @@ class QuestionAnswering extends Component {
   handleSubmit = async () => {
     const { input, question } = this.state;
 
+    // Add user2 question and loading message to the messages array
+    this.setState((prevState) => ({
+      messages: [
+        ...prevState.messages,
+        { text: question, sender: "user2" },
+        { text: "...", sender: "user1", loading: true }, // Placeholder for loading message
+      ],
+      question: "",
+    }));
+
     // Make a POST request to the API
     try {
       const response = await fetch("http://localhost:5000/question-answering", {
@@ -52,13 +62,13 @@ class QuestionAnswering extends Component {
 
       if (response.ok) {
         const data = await response.json();
-        // Handle the response data as needed
+        // Update the loading message with the actual response data
         this.setState((prevState) => ({
-          messages: [
-            ...prevState.messages,
-            { text: question, sender: "user2" },
-            { text: data, sender: "user1" },
-          ],
+          messages: prevState.messages.map((message) =>
+            message.text === "..." && message.sender === "user1"
+              ? { ...message, text: data, loading: false } // Update loading flag
+              : message
+          ),
           question: "",
         }));
         console.log(data);
@@ -105,7 +115,7 @@ class QuestionAnswering extends Component {
                         key={index}
                         className={`message ${
                           message.sender === "user1" ? "left" : "right"
-                        }`}
+                        } ${message.loading ? "loading-animation" : ""}`}
                       >
                         <span className="user-icon">
                           {/* {userIcons[message.sender]} */}

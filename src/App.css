@@ -377,3 +377,16 @@ li {
   border-top-left-radius: 15px; /* Rounded top right corner */
   border-bottom-right-radius: 15px; /* Rounded bottom right corner */
 }
+
+.loading-animation {
+  animation: pulse 1s infinite alternate;
+}
+
+@keyframes pulse {
+  from {
+    opacity: 0.2;
+  }
+  to {
+    opacity: 1;
+  }
+}

@@ -63,7 +63,7 @@ function InstitutionDetails() {
                     />
                   </Col>
                 </Row>
-                <Row>
+                {/* <Row>
                   <Col sm={6}>
                     <Form.Label>Address of Institute</Form.Label>
                     <Form.Control
@@ -82,7 +82,7 @@ function InstitutionDetails() {
                       type="text"
                     />
                   </Col>
-                </Row>
+                </Row> */}
               </Row>
             </Row>
             <Button variant="success">Save</Button>
