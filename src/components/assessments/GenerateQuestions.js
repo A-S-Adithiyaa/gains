@@ -53,6 +53,7 @@ class GenerateQuestions extends Component {
       takeAssessment: true,
       questionsAndAnswers: response.data,
     });
+    console.log(response.data)
   };
 
   render() {
@@ -119,13 +120,14 @@ class GenerateQuestions extends Component {
           </ThemeProvider>
           // <TakeAssessment questions={questionsAndAnswers} />
         )}
-        <Button  className="new" onClick={()=>{
+        {!questionsAndAnswers&&<Button  className="new" onClick={()=>{
           localStorage.removeItem("current_topic")
           localStorage.removeItem("input")
           window.location.reload();
         }}>
           <CgAddR size={40} />
-      </Button>
+      </Button>}
+      
       </>
     );
   }

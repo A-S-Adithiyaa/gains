@@ -24,9 +24,10 @@ class GenerateQuestions extends Component {
       axios.get("http://localhost:8080/jpa/"+this.state.tid+"/get-notes")
     .then(response=>{
       this.setState({
-        summary:response.data 
+        summary:response.data.summary.split(".|"),
+        generateSummary:true
       })
-      console.log(response.data)
+  
       
     })
     .catch(error=>console.log(error))
@@ -52,7 +53,10 @@ class GenerateQuestions extends Component {
   };
 
   handleSubmit = async () => {
+    console.log(this.state.summary)
+    
     this.setState({ loading: true });
+    
     const { input } = this.state;
     if(this.state.tid===null){
       await axios
@@ -129,7 +133,7 @@ class GenerateQuestions extends Component {
       },
       body: JSON.stringify({
         topic: this.state.title,
-        summary:data.join("")
+        summary:data.join(".|")
       }),
     }).catch(function (error) {
       console.log(error);
@@ -137,13 +141,14 @@ class GenerateQuestions extends Component {
   };
 
   editNotes = (data,tid)=>{
+    console.log("inside edit")
     fetch("http://localhost:8080/jpa/" + tid + "/edit-notes", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        summary:data.join("")
+        summary:data.join(".|")
       }),
     }).catch(function (error) {
       console.log(error);
@@ -314,6 +319,7 @@ class GenerateQuestions extends Component {
         }}>
               <CgAddR size={40} />
         </Button>
+        
       </>
     );
   }
