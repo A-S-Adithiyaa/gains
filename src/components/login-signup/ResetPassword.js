@@ -59,7 +59,12 @@ const ResetPassword = () => {
         {
             "otp":otp
         })
-        .then(response=>setVerified(response.data))
+        .then(response=>{
+            setVerified(response.data)
+            if(!response.data){
+                toast('Wrong OTP')
+            }
+        })
         .catch(error=>console.log(error));
     }
 

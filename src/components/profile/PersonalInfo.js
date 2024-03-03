@@ -44,7 +44,7 @@ function PersonalInfo() {
 
   const save_changes=()=>{
     const formdata={
-      "image":image,
+      "image":newImage,
       "firstName":firstname,
       "lastName":lastname,
       "country":country,

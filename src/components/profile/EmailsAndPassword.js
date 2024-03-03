@@ -32,6 +32,8 @@ function EmailsAndPassword() {
       })
       .then(()=>toast('Password Updated'))
       .catch(error=>console.log(error))
+      setConfirmPassword("")
+      setNewPassword("")
     }
     else{
       toast("Password doesn't match");
