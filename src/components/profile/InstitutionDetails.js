@@ -1,36 +1,41 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Button, Col, Container, Form, Row, Stack } from "react-bootstrap";
 
+
 function InstitutionDetails() {
-  const [userData, setUserData] = useState(null);
-  const [username, setUsername] = useState("");
-  const [instituteName, setInstituteName] = useState("");
+  const [institute,setInstitute]=useState("")
   const [grade, setGrade] = useState("");
-  const [address, setAddress] = useState("");
-  const [contact, setContactNumber] = useState("");
+  const [loading,setLoading]=useState(false);
 
-  useEffect(() => {
-    const hardcodedUserData = {
-      image: "",
-      firstname: "John",
-      lastname: "Doe",
-      email: "john.doe@example.com",
-      phone: "123-456-7890",
-      dob: "1990-01-01",
-      country: "United States",
-      password: "123456",
-    };
+  useEffect(()=>{
+    setLoading(false);
+    axios.get("http://localhost:8080/jpa/get-institute/"+localStorage.getItem("isLoggedIn"))
+    .then(response=>{
+        
+          setGrade(response.data.grade)
+          setInstitute(response.data.institute)
+       
+    })
+    setLoading(true)
+  },[])
 
-    setUserData(hardcodedUserData);
 
-    // Retrieve username from localStorage
-    const storedUsername = localStorage.getItem("username");
-    setUsername(storedUsername);
-  }, []);
+  const save_changes=()=>{
+    const formdata={
+      "grade":grade,
+      "institute":institute
+
+    }
+      axios.put("http://localhost:8080/jpa/update-institute/"+localStorage.getItem("isLoggedIn"),formdata)
+      .catch(error=>console.log(error));
+  }
+
+
 
   return (
     <div>
-      {userData ? (
+      {loading ? (
         <div>
           <Container>
             <Row>
@@ -47,8 +52,9 @@ function InstitutionDetails() {
                   <Col sm={6}>
                     <Form.Label>Institute Name</Form.Label>
                     <Form.Control
+                      value={institute}
                       onChange={(e) => {
-                        setInstituteName(e.target.value);
+                        setInstitute(e.target.value)
                       }}
                       type="text"
                     />
@@ -56,14 +62,15 @@ function InstitutionDetails() {
                   <Col sm={6}>
                     <Form.Label>Grade</Form.Label>
                     <Form.Control
+                      value={grade}
                       onChange={(e) => {
                         setGrade(e.target.value);
                       }}
-                      type="password"
+                      type="text"
                     />
                   </Col>
                 </Row>
-                <Row>
+                {/* <Row>
                   <Col sm={6}>
                     <Form.Label>Address of Institute</Form.Label>
                     <Form.Control
@@ -82,10 +89,10 @@ function InstitutionDetails() {
                       type="text"
                     />
                   </Col>
-                </Row>
+                </Row> */}
               </Row>
             </Row>
-            <Button variant="success">Save</Button>
+            <Button variant="success" onClick={save_changes}>Save</Button>
           </Container>
         </div>
       ) : (

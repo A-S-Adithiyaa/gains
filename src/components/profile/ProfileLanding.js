@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   CDBSidebar,
   CDBSidebarContent,
@@ -13,8 +13,17 @@ import InstitutionDetails from "./InstitutionDetails";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import { Col, Row } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const ProfileLanding = () => {
+
+  const navigate=useNavigate("");
+
+  useEffect(()=>{
+    if(localStorage.getItem("isLoggedIn")===null){
+      navigate("/");
+    }
+  })
   const [activeMenuItem, setActiveMenuItem] = useState("personal-info"); // State to track active menu item
 
   let activeComponent;
