@@ -10,6 +10,7 @@ import History from "./components/history/History";
 import ProfileLanding from "./components/profile/ProfileLanding";
 import Navbar from "./components/Navbar";
 import QuestionsLanding from "./components/questions/QuestionsLAnding";
+import ResetPassword from "./components/login-signup/ResetPassword";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route exact path="/history" element={<History />} />
         <Route exact path="/profile" element={<ProfileLanding />} />
         <Route exact path="/questions" element={<QuestionsLanding />} />
+        <Route exact path="/reset-password" element={<ResetPassword />} />
       </Routes>
     </>
   );

@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Container, Row, Col, Form, Button, Image } from "react-bootstrap";
 import ListGroup from "react-bootstrap/ListGroup";
 import axios from "axios";
+import { CgAddR } from "react-icons/cg";
+import './notes.css';
 
 class GenerateQuestions extends Component {
   constructor(props) {
@@ -17,18 +19,43 @@ class GenerateQuestions extends Component {
     };
   }
 
+  componentDidMount(){
+    if(this.state.tid!=null){
+      axios.get("http://localhost:8080/jpa/"+this.state.tid+"/get-notes")
+    .then(response=>{
+      this.setState({
+        summary:response.data 
+      })
+      console.log(response.data)
+      
+    })
+    .catch(error=>console.log(error))
+    }
+  }
+
   handleInputChange = (event) => {
     const inputValue = event.target.value;
     this.setState({
       input: inputValue,
     });
+    if(this.state.tid!==null){
+      fetch("http://localhost:8080/jpa/"+this.state.tid+"/edit-content", {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(event.target.value ),
+        })
+        .catch(error=>console.log(error))
+    }
     localStorage.setItem("input", inputValue); // Store input in localStorage
   };
 
   handleSubmit = async () => {
     this.setState({ loading: true });
     const { input } = this.state;
-    await axios
+    if(this.state.tid===null){
+      await axios
       .post("http://localhost:5000/generate-title", {
         context: input,
       })
@@ -36,52 +63,65 @@ class GenerateQuestions extends Component {
         this.setState({
           title: response.data.title,
           loading: false,
-        });
-      });
-
-    await axios
-      .post("http://localhost:5000/generate_summary", {
-        context: input,
-      })
-      .then((response) =>
-        this.setState({
-          loading: false,
-          generateSummary: true,
-          summary: response.data,
         })
-      );
 
-    console.log(input);
-    console.log(this.state.title);
-    await fetch(
-      "http://localhost:8080/jpa/" + this.state.id + "/create-topics",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ topic: this.state.title }),
-      }
-    )
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        localStorage.setItem("current_topic", data);
-        this.setState({
-          tid: data,
-        });
-        this.setState({
-          loading: false,
-        });
-        this.createNotes(data);
-      })
-      .catch(function (error) {
-        console.log(error);
+        fetch(
+          "http://localhost:8080/jpa/" + this.state.id + "/create-topics",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ 
+              topic: response.data.title ,
+              content: this.state.input,}),
+          }
+        )
+          .then((res) => {
+            return res.json();
+          })
+          .then((data) => {
+            localStorage.setItem("current_topic", data);
+            this.setState({
+              tid: data,
+            });
+            this.setState({
+              loading: false,
+            });
+            this.generateSumm(data);
+          })
+          .catch(function (error) {
+            console.log(error);
+          }); 
       });
+ 
+    }
+    else{
+      this.generateSumm(this.state.tid,true);
+    }
+    
   };
 
-  createNotes = (tid) => {
+ 
+  generateSumm=(tid,val)=>{
+    axios
+    .post("http://localhost:5000/generate_summary", {
+      context: this.state.input,
+    })
+    .then((response) =>{
+      this.setState({
+        loading: false,
+        generateSummary: true,
+        summary: response.data,
+      })
+
+      !val?this.createNotes(response.data,tid):this.editNotes(response.data,tid);
+    } 
+);
+  }
+
+  createNotes = (data,tid) => {
+    console.log(data);
     fetch("http://localhost:8080/jpa/" + tid + "/create-notes", {
       method: "POST",
       headers: {
@@ -89,13 +129,26 @@ class GenerateQuestions extends Component {
       },
       body: JSON.stringify({
         topic: this.state.title,
-        content: this.state.input,
-        // "summary":this.state.summary
+        summary:data.join("")
       }),
     }).catch(function (error) {
       console.log(error);
     });
   };
+
+  editNotes = (data,tid)=>{
+    fetch("http://localhost:8080/jpa/" + tid + "/edit-notes", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        summary:data.join("")
+      }),
+    }).catch(function (error) {
+      console.log(error);
+    });
+  }
 
   // handleSubmit = async () => {
   //   this.setState({ loading: true });
@@ -254,6 +307,13 @@ class GenerateQuestions extends Component {
             </Col>
           </Row>
         </Container>
+        <Button  className="new" onClick={()=>{
+          localStorage.removeItem("current_topic")
+          localStorage.removeItem("input")
+          window.location.reload();
+        }}>
+              <CgAddR size={40} />
+        </Button>
       </>
     );
   }

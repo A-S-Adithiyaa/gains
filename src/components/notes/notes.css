@@ -1,0 +1,8 @@
+.new{
+    position: fixed;
+    display: flex;
+    bottom:25.5%;
+    right:10%;
+    padding:0.3%;
+    z-index: 1;
+}
