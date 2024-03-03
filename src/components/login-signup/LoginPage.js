@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { Navigate, useNavigate } from "react-router-dom";
 import Navbar from "../Navbar";
+import "/home/manish/Projects/GAINS/gains/src/App.css";
 
 function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -25,6 +26,12 @@ function LoginPage() {
       "lightblue",
     ]);
   }, []);
+
+
+  const forgot=()=>{
+    navigate("/reset-password")
+
+  }
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -147,8 +154,8 @@ function LoginPage() {
                     {isLoading ? "Logging in..." : "Submit"}
                   </button>
                 </div>
-                <p className="text-center mt-2">
-                  Forgot <a href="#">password?</a>
+                <p className="text-center mt-2" onClick={forgot}>
+                  <button type='button' className="forgot"><u>Forgot password?</u></button>
                 </p>
               </div>
             </form>

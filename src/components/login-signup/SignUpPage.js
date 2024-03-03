@@ -4,6 +4,8 @@ import { toast } from "react-toastify";
 import axios from 'axios';
 import "react-toastify/dist/ReactToastify.css";
 import { Navigate, useNavigate } from "react-router-dom";
+import { Button, Col, Container, Form, Row, Stack } from "react-bootstrap";
+import { IoIosSend } from "react-icons/io";
 
 toast.configure();
 
@@ -15,9 +17,13 @@ function SignUpPage() {
     firstName: "",
     lastName: "",
     phone: "",
-    dob: "", 
+    dob: "",
   });
+  const [otp,setOtp]=useState(null);
+  const [id,setId] =useState(null);
+  const [verified,setVerified]=useState(false)
   const navigate = useNavigate('');
+  const  [timer,setTimer]=useState(0);
 
   useEffect(() => {
     // Call the consoleText function with the specified parameters
@@ -35,6 +41,8 @@ function SignUpPage() {
     if (!validateForm()) {
       return;
     }
+
+    
 
     setIsLoading(true);
     axios.post('http://localhost:8080/jpa/create-users', formData)
@@ -142,6 +150,41 @@ function SignUpPage() {
     return dob instanceof Date && !isNaN(dob) && dob < today;
   };
 
+  const send_otp=(e)=>{
+    axios.post("http://localhost:8080/jpa/verify-email",
+    {
+        email:formData.email
+    })
+    .then(response=>{
+            setId(response.data)
+    })
+    .catch(error=>console.log(error));
+    countdownTimer(60)
+        function countdownTimer(counter) {
+            if (counter >= 0) {
+              setTimeout(function() {
+                setTimer(counter)
+                countdownTimer(counter - 1);
+              }, 1000);
+            }
+            else{
+              setId(null);
+              toast('OTP expired')
+            }
+
+          }
+    e.preventDefault();
+}
+
+const verify_otp=()=>{
+    axios.post("http://localhost:8080/jpa/"+id+"/verify-otp",
+    {
+        "otp":otp
+    })
+    .then(response=>setVerified(response.data))
+    .catch(error=>console.log(error));
+}
+
   return (
     <div className="login-container">
       <div className="login-left">
@@ -227,11 +270,27 @@ function SignUpPage() {
                     placeholder="Phone Number"
                   />
                 </div>
-                <div className="d-grid gap-2 mt-3">
+                <div className="form-group mt-3">
+                  <label>OTP</label>
+                  <input
+                    type="text"
+                    className="form-control mt-1"
+                    name="otp"
+                    value={otp}
+                    onChange={(e)=>setOtp(e.target.value)}
+                    placeholder="OTP"
+                  />
+                </div>
+                {!verified&&<Button variant="success" className="form-control mt-1" disabled={id==null && timer!=0} onClick={(e)=>{
+                    id?verify_otp(e):send_otp(e)
+                }}>
+                    {id?"Verify OTP":timer==0?"Send OTP":timer}
+                  </Button>}
+                {verified&&<div className="d-grid gap-2 mt-3">
                   <button type="submit" className="btn btn-primary">
                     {isLoading ? "Signing up..." : "Submit"}
                   </button>
-                </div>
+                </div>}
               </div>
             </form>
           </div>
