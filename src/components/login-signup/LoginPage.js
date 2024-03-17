@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { Navigate, useNavigate } from "react-router-dom";
 import Navbar from "../Navbar";
-import "/home/manish/Projects/GAINS/gains/src/App.css";
+// import "/home/manish/Projects/GAINS/gains/src/App.css";
 
 function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -27,11 +27,9 @@ function LoginPage() {
     ]);
   }, []);
 
-
-  const forgot=()=>{
-    navigate("/reset-password")
-
-  }
+  const forgot = () => {
+    navigate("/reset-password");
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -57,7 +55,7 @@ function LoginPage() {
           toast("Successfully Logged In");
           setEmail("");
           setPassword("");
-          navigate("/");  
+          navigate("/");
           window.location.reload();
         } else {
           setIsLoading(false);
@@ -66,7 +64,7 @@ function LoginPage() {
       })
       .catch(function (error) {
         console.log(error);
-      })
+      });
     // Perform the API call
     //   fetch("http://localhost:8080/jpa/login", {
     //     method: "POST",
@@ -155,7 +153,9 @@ function LoginPage() {
                   </button>
                 </div>
                 <p className="text-center mt-2" onClick={forgot}>
-                  <button type='button' className="forgot"><u>Forgot password?</u></button>
+                  <button type="button" className="forgot">
+                    <u>Forgot password?</u>
+                  </button>
                 </p>
               </div>
             </form>

@@ -3,15 +3,16 @@ import { Container, Row, Col, Form, Button, Image } from "react-bootstrap";
 import ListGroup from "react-bootstrap/ListGroup";
 import axios from "axios";
 import { CgAddR } from "react-icons/cg";
-import "./notes.css";
+// import "./notes.css";
 
-class GenerateQuestions extends Component {
+class GenerateNotesVideo extends Component {
   constructor(props) {
     super(props);
     this.state = {
       input: localStorage.getItem("input") || "",
       loading: false,
       generateSummary: false,
+      fetchVideo: "",
       summary: [],
       title: "",
       tid: localStorage.getItem("current_topic"),
@@ -32,6 +33,30 @@ class GenerateQuestions extends Component {
         .catch((error) => console.log(error));
     }
   }
+
+  fetchVideo = () => {
+    // Define your API endpoint
+    const apiUrl = "http://localhost:5000/video"; // Update with your actual API endpoint
+
+    // Update state to indicate fetching
+    this.setState({ loading: true });
+
+    // Make the API call to fetch the video
+    axios
+      .get(apiUrl)
+      .then((response) => {
+        console.log(response);
+        // Assuming the response contains the video URL
+        this.setState({
+          videoUrl: response.data,
+          loading: false,
+        });
+      })
+      .catch((error) => {
+        console.error("Error fetching video:", error);
+        this.setState({ loading: false });
+      });
+  };
 
   handleInputChange = (event) => {
     const inputValue = event.target.value;
@@ -151,103 +176,9 @@ class GenerateQuestions extends Component {
     });
   };
 
-  // handleSubmit = async () => {
-  //   this.setState({ loading: true });
-  //   const id=localStorage.getItem('isLoggedIn')
-  //   const { input } = this.state;
-  //   const title_res = await axios.post(
-  //     "http://localhost:5000/generate-title",
-  //     {
-  //       context: input,
-  //     }
-  //   );
-  //   console.log(title_res.data);
-  //   this.setState({
-  //     title: title_res.data,
-  //     loading:false
-  //   });
-
-  //     fetch("http://localhost:8080/jpa/"+id+"/create-topics",{
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({"topic":title_res.data.title}),
-  //     })
-  //       .then(res=>{
-  //           return res.json();
-  //       })
-  //       .then(data=>{
-  //         localStorage.setItem('current_topic', data);
-  //         this.setState({
-  //           tid:data
-  //         })
-  //          console.log(data)
-  //          this.setState({
-  //           loading:false
-  //         });
-
-  //       })
-  //       .catch(function (error) {
-
-  //           console.log(error);
-  //       });
-
-  // const response = await axios.post(
-  //   "http://localhost:5000/generate_summary",
-  //   {
-  //     context: input,
-  //   }
-  // );
-  // this.setState({
-  //   loading: false,
-  //   generateSummary: true,
-  //   summary: response.data,
-  // })
-
-  // axios.post("http://localhost:5000/generate_summary",
-  // {
-  //   context: input,
-  // })
-  // .then((response)=>this.setState({
-  //   loading: false,
-  //   generateSummary: true,
-  //   summary: response.data,
-  // }))
-  // .then(()=>{
-  //   console.log(this.state.summary)
-  //   console.log(this.state.tid)
-  // })
-  // fetch("http://localhost:8080/jpa/"+this.state.tid+"/create-notes",{
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //   },
-  //   body: JSON.stringify({"topic":this.state.title,
-  //                         "content":this.state.input,
-  //                         "summary":"awawerhpiufnq;ijfbp3gwqifiqwhefp3yg  ;iwbwegqubqih4ygief;wejpqijflfge9ruhawjfdghpq3gliejfuf;eug"
-  //                       }),
-  // })
-  //     .then(res=>{
-  //         return res.json();
-  //     })
-  //     .then(data=>{
-  //       localStorage.setItem('current_topic', data);
-  //        console.log(data)
-  //        this.setState({
-  //         loading:false
-  //       });
-
-  //     })
-  //     .catch(function (error) {
-
-  //         console.log(error);
-  //     });
-
-  // };
-
   render() {
-    const { loading, generateSummary, summary } = this.state;
+    const { loading, generateSummary, summary, videoUrl } = this.state;
+
     return (
       <>
         {loading && (
@@ -255,6 +186,14 @@ class GenerateQuestions extends Component {
             <img src="images/infinity_gif.svg" alt="Loading..." />
           </div>
         )}
+        <div style={{ width: "90%", margin: "0 auto" }}>
+          {videoUrl && (
+            <video controls style={{ width: "100%" }}>
+              <source src={videoUrl} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          )}
+        </div>
 
         <Container>
           <Row>
@@ -264,7 +203,7 @@ class GenerateQuestions extends Component {
               className="d-none d-md-flex align-items-center justify-content-center"
             >
               {!generateSummary ? (
-                <Image src="images/notes.svg"></Image>
+                <Image src="images/learn_image.svg"></Image>
               ) : (
                 <ListGroup as="ol" numbered>
                   {summary.map((item, index) => (
@@ -278,7 +217,7 @@ class GenerateQuestions extends Component {
             <Col xs={12} md={6}>
               <Row>
                 <Col xs={12} className="text-center">
-                  <h1>Notes</h1>
+                  <h1>Learn</h1>
                 </Col>
               </Row>
               <Row>
@@ -296,13 +235,12 @@ class GenerateQuestions extends Component {
               </Row>
               <Row>
                 <Col xs={12} className="text-center">
-                  <Button
+                  <button
                     className="assessment-send-button"
-                    variant="primary"
-                    onClick={this.handleSubmit}
+                    onClick={this.fetchVideo}
                   >
-                    {loading ? "Loading..." : "Generate"}
-                  </Button>
+                    {loading ? "Loading..." : "Generate Video"}
+                  </button>
                 </Col>
               </Row>
             </Col>
@@ -323,4 +261,4 @@ class GenerateQuestions extends Component {
   }
 }
 
-export default GenerateQuestions;
+export default GenerateNotesVideo;
