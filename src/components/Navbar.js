@@ -7,9 +7,7 @@ import Offcanvas from "react-bootstrap/Offcanvas";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { IoIosContact } from "react-icons/io";
 
-
 function NavbarSection() {
-  
   const isLoggedIn = localStorage.getItem("isLoggedIn") || false;
 
   const logout = () => {
@@ -35,7 +33,7 @@ function NavbarSection() {
           </Offcanvas.Header>
           <Offcanvas.Body>
             <Nav className="justify-content-center flex-grow-1 pe-3">
-              <Nav.Link className="nav-links" href="#action1">
+              <Nav.Link className="nav-links" href="#/learn">
                 LEARN
               </Nav.Link>
               <Nav.Link className="nav-links" href="#/notes">

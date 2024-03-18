@@ -2,6 +2,7 @@
   --home-background-color: #DF826C;
   --pure-white: #FFFFFF;
   --pure-black: #000000;
+  --orange-shade: #FF9933;
   --secondary-color: #2ecc71;
   --education-section-background:#3F3D56;
   --font-size: 16px;
@@ -264,7 +265,6 @@ li {
 
 
 .assessment-landing{
-  background-color: #E9F1FA;
   padding-top: 30px;
   min-height: 100vh;
   height: auto;
@@ -282,9 +282,22 @@ li {
 
 .assessment-send-button {
   margin-top: 20px;
+  background-color: var(--orange-shade);
+  border-color: var(--orange-shade);
+  border-radius: 15px 15px 15px;
+  color: var(--pure-white);
+  font-weight:600;
   width: 100%;
   height: 50px;
 }
+
+.assessment-send-button:hover{
+  background-color: var(--pure-white);
+  border-color: var(--pure-black);
+  color: var(--orange-shade);
+}
+
+
 
 .loading-container {
   display: flex;
@@ -351,6 +364,7 @@ li {
   background-color: var(--pure-white);
   height: 500px; /* Set a fixed height for the message list */
   overflow-y: auto; /* Enable vertical scrolling */
+  border: 2px solid var(--orange-shade); /* Border color */
 }
 
 .message.left {
@@ -376,6 +390,21 @@ li {
   border-bottom-left-radius: 15px; /* Rounded top left corner */
   border-top-left-radius: 15px; /* Rounded top right corner */
   border-bottom-right-radius: 15px; /* Rounded bottom right corner */
+}
+
+.question-field{
+  border: 2px solid var(--orange-shade);
+}
+
+.send-button{
+  background-color: var(--orange-shade);
+  border-color: var(--orange-shade);
+}
+
+.send-button:hover{
+  background-color: var(--pure-white);
+  border-color: var(--orange-shade);
+  color: var(--orange-shade);
 }
 
 .loading-animation {
@@ -443,4 +472,17 @@ li {
 
 #inputs{
   width:300px;
+}
+
+textarea{
+  border: 2px solid var(--orange-shade)!important;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+  background-color: var(--orange-shade);
+
+}
+
+.nav-pills .nav-link{
+  color: var(--orange-shade);
 }

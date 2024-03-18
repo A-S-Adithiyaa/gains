@@ -227,6 +227,7 @@ class QuestionAnswering extends Component {
               <Row className="give-both-margins">
                 <Stack direction="horizontal" gap={3}>
                   <Form.Control
+                    className="question-field"
                     value={this.state.question}
                     onChange={(e) =>
                       this.setState({ question: e.target.value })
@@ -235,7 +236,7 @@ class QuestionAnswering extends Component {
                       e.key === "Enter" ? this.handleSubmit() : ""
                     }
                   />
-                  <Button variant="success" onClick={this.handleSubmit}>
+                  <Button className="send-button" onClick={this.handleSubmit}>
                     <IoIosSend />
                   </Button>
                 </Stack>
