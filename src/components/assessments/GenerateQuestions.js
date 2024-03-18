@@ -30,6 +30,7 @@ class GenerateQuestions extends Component {
       loading: false,
       takeAssessment: false,
       questionsAndAnswers: [],
+      quizId:null
     };
   }
 
@@ -44,6 +45,15 @@ class GenerateQuestions extends Component {
   handleSubmit = async () => {
     this.setState({ loading: true });
     const { input } = this.state;
+
+    // axios.post("http://localhost:8080/jpa/"+localStorage.getItem("current_topic")+"/create-quiz",{
+    //   topic:localStorage.getItem("topic")
+    // })
+    // .then(response=>this.setState({
+    //   quizId:response.data
+    // }))
+    // .catch(error=>console.log(error))
+
     const response = await axios.post("http://localhost:5000/generate_qa", {
       context: input,
     });
@@ -53,8 +63,22 @@ class GenerateQuestions extends Component {
       takeAssessment: true,
       questionsAndAnswers: response.data,
     });
+
+    // create_questions(response.data)
     console.log(response.data)
   };
+
+
+
+  // create_questions(questions_answers){
+  //   var correct=[]
+  //   questions_answers.map((qa)=>{
+  //     var options=[]
+  //     qa.answer.map((ans)=>{
+
+  //     })
+  //   })
+  // }
 
   render() {
     const { loading, takeAssessment, questionsAndAnswers } = this.state;
