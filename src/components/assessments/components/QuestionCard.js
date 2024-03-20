@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 // import { randQustions } from "../lib/quiz";
 import ShowMessage from "./PageElements/ShowMessage";
+import axios from "axios";
 import { Box, Button } from "./PageElements/UIElements";
 import ShowConfetti from "./ShowConfetti";
 const BasicGrid = styled.div`
@@ -15,10 +16,13 @@ const QuestionCard = ({ randQustions }) => {
   const [score, setScore] = useState(0);
   const [avg, setAvg] = useState(0);
   const [showAns, setShowAns] = useState(false);
+  const [selected,setSelected]=useState([]);
 
   //function to calc score and show correct answer
-  const handleAnswerClick = (isCorrect, e) => {
+  const handleAnswerClick = (isCorrect, e,ind) => {
     setShowAns(true);
+    setSelected([...selected, ind]);
+    // console.log(e)
     if (isCorrect) {
       setScore((prev) => prev + 1);
     }
@@ -32,7 +36,7 @@ const QuestionCard = ({ randQustions }) => {
   const nextQuestion = () => {
     setShowAns(false);
     if (currentIndex === randQustions.length - 1) {
-      endOfQuiz();
+     endOfQuiz();
     } else {
       setCurrentIndex((prev) => prev + 1);
     }
@@ -58,6 +62,17 @@ const QuestionCard = ({ randQustions }) => {
     setShowAns(false);
   };
   if (endQuiz) {
+    // axios.put("http://localhost:8080/jpa/"+localStorage.getItem("quiz")+"/edit-quiz",{
+    //   selectedAnswers:selected
+    // })
+    // .catch(error=>console.log(error))
+    // axios.put("http://localhost:8080/jpa/"+localStorage.getItem("quiz")+"/edit-quiz",{
+    //   marksScore:score
+    // })
+    // .catch(error=>console.log(error))
+
+    console.log(selected)
+    
     return (
       <>
         {avg >= 80 && <ShowConfetti whenToShow={endQuiz} />}
@@ -93,10 +108,11 @@ const QuestionCard = ({ randQustions }) => {
 
         <BasicGrid className="answers-row middle">
           {randQustions[currentIndex].answers.map((answer, key) => (
+            
             <Button
               className={showAns && answer.isCorrect ? "ans" : ""}
               onClick={(e) => {
-                handleAnswerClick(answer.isCorrect, e);
+                handleAnswerClick(answer.isCorrect, e,randQustions[currentIndex].answers.indexOf(answer));
               }}
               key={key}
               disabled={showAns}

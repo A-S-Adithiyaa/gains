@@ -260,7 +260,7 @@ li {
 }
 
 .question-text, .top-text{
-  color: var(--pure-black);
+  color: white;
 }
 
 
@@ -271,7 +271,7 @@ li {
 }
 
 .top{
-  color: var(--pure-black);
+  color: white;
 }
 
 @media screen and (max-width: 980px){

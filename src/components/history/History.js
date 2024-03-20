@@ -186,7 +186,7 @@ const History = () => {
 
     
     return ( 
-        <div>
+        <div className="scrolla">
             <div className="his_back">
                <div className="his_body">
                     <h1 className="his_head">Search History</h1>
@@ -225,7 +225,7 @@ const History = () => {
                                                 localStorage.setItem("current_topic",act.id)
                                                 localStorage.setItem("input",act.content)
                                                 localStorage.setItem("topic",act.topic)
-                                                navigate("/video")
+                                                navigate("/learn")
                                             }}>Learn</button>:""}
                                             {act.action[1]?<button className={index%2==0?"but-light":"but-dark"} onClick={()=>{
                                                 localStorage.setItem("current_topic",act.id)
@@ -251,7 +251,7 @@ const History = () => {
                                                 localStorage.setItem("current_topic",act.id)
                                                 localStorage.setItem("input",act.content)
                                                 localStorage.setItem("topic",act.topic)
-                                                navigate("/video")
+                                                navigate("/learn")
                                             }}>Learn</button>}
                                             {act.action[1]?"":<button className={index%2==0?"but-light":"but-dark"} onClick={()=>{
                                                 localStorage.setItem("current_topic",act.id)
@@ -287,7 +287,7 @@ const History = () => {
                                                 localStorage.setItem("current_topic",act.id)
                                                 localStorage.setItem("input",act.content)
                                                 localStorage.setItem("topic",act.topic)
-                                                navigate("/video")
+                                                navigate("/learn")
                                             }}>Learn</button>:""}
                                             {act.action[1]?<button className={index%2==0?"but-light":"but-dark"} onClick={()=>{
                                                 localStorage.setItem("current_topic",act.id)
@@ -313,7 +313,7 @@ const History = () => {
                                                 localStorage.setItem("current_topic",act.id)
                                                 localStorage.setItem("input",act.content)
                                                 localStorage.setItem("topic",act.topic)
-                                                navigate("/video")
+                                                navigate("/learn")
                                             }}>Learn</button>}
                                             {act.action[1]?"":<button className={index%2==0?"but-light":"but-dark"} onClick={()=>{
                                                 localStorage.setItem("current_topic",act.id)

@@ -29,8 +29,7 @@ class GenerateQuestions extends Component {
       input: localStorage.getItem("input") || "",
       loading: false,
       takeAssessment: false,
-      questionsAndAnswers: [],
-      quizId:null
+      questionsAndAnswers: []
     };
   }
 
@@ -46,13 +45,14 @@ class GenerateQuestions extends Component {
     this.setState({ loading: true });
     const { input } = this.state;
 
-    // axios.post("http://localhost:8080/jpa/"+localStorage.getItem("current_topic")+"/create-quiz",{
-    //   topic:localStorage.getItem("topic")
-    // })
-    // .then(response=>this.setState({
-    //   quizId:response.data
-    // }))
-    // .catch(error=>console.log(error))
+    axios.post("http://localhost:8080/jpa/"+localStorage.getItem("current_topic")+"/create-quiz",{
+      topic:localStorage.getItem("topic"),
+      totalMarks:15
+    })
+    .then(response=>
+      localStorage.setItem("quiz",response.data)
+      )
+    .catch(error=>console.log(error))
 
     const response = await axios.post("http://localhost:5000/generate_qa", {
       context: input,
@@ -63,20 +63,39 @@ class GenerateQuestions extends Component {
       takeAssessment: true,
       questionsAndAnswers: response.data,
     });
+
+    // create_questions(response.data)
     console.log(response.data)
+    this.create_questions(response.data)
   };
 
 
+  
+  create_questions(questions_answers){
+    var correct=[]
+    questions_answers.map((qa)=>{
+      var options=[]
+      qa['answers'].map((ans)=>{
+        options.push(ans['answerText'])
+        if(ans['isCorrect']==true){
+          correct.push(qa.answers.indexOf(ans))
+        }
+      })
+    //   axios.post("http://localhost:8080/jpa/"+localStorage.getItem("quiz")+"/create-questions",{
+    //   question:qa['question'],
+    //   options:options
+    // })
+    // .catch(error=>console.log(error))
 
-  // create_questions(questions_answers){
-  //   var correct=[]
-  //   questions_answers.map((qa)=>{
-  //     var options=[]
-  //     qa.answer.map((ans)=>{
-
-  //     })
-  //   })
-  // }
+    })
+    console.log(correct)
+    console.log(questions_answers)
+    // axios.put("http://localhost:8080/jpa/"+localStorage.getItem("quiz")+"/edit-quiz",{
+    //   correctAnswers:correct
+    // })
+    // .catch(error=>console.log(error))
+    
+  }
 
   render() {
     const { loading, takeAssessment, questionsAndAnswers } = this.state;
