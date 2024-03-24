@@ -30,7 +30,7 @@ import os
 import torch
 from transformers import AutoTokenizer, T5ForConditionalGeneration
 from transformers import pipeline
-
+from test import make_video
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(device)
@@ -40,6 +40,7 @@ print(device)
 # #!pip install sentencepie ``
 s2v = Sense2Vec().from_disk("./s2v_old")
 
+summarized_text=""
 
 # with open('t5_summary_model.pkl', 'rb') as f:
 #     summary_model = pickle.load(f)
@@ -436,7 +437,8 @@ def get_distractors (word,origsentence,sense2vecmodel,sentencemodel,top_n,lambda
 def get_mca_questions(context: str):
     summarized_text = summarizer(context, summary_model, summary_tokenizer)
 
-    print("Summary: ", summarized_text)
+    # print("Summary: ", summarized_text)
+    # summary_text=summarized_text
 
     imp_keywords = get_keywords(context)
     
@@ -501,11 +503,6 @@ def answer_question(context, question):
     
     return res['answer']
 
-print(get_summary_in_points('''Cricket is a bat-and-ball game played between two teams of eleven players on a field at the centre of which is a 22-yard (20-metre) pitch with a wicket at each end, each comprising two bails balanced on three stumps. Two players from the batting team (the striker and nonstriker) stand in front of either wicket, with one player from the fielding team (the bowler) bowling the ball towards the striker's wicket from the opposite end of the pitch. The striker's goal is to hit the bowled ball and then switch places with the nonstriker, with the batting team scoring one run for each exchange. Runs are also scored when the ball reaches or crosses the boundary of the field or when the ball is bowled illegally.
-
-The fielding team tries to prevent runs from being scored by dismissing batters (so they are "out"). Means of dismissal include being bowled, when the ball hits the striker's wicket and dislodges the bails, and by the fielding side either catching the ball after it is hit by the bat, but before it hits the ground, or hitting a wicket with the ball before a batter can cross the crease in front of the wicket. When ten batters have been dismissed, the innings ends and the teams swap roles. The game is adjudicated by two umpires, aided by a third umpire and match referee in international matches. They communicate with two off-field scorers who record the match's statistical information.
-
-Forms of cricket range from Twenty20 (also known as T20), with each team batting for a single innings of 20 overs (each "over" being a set of 6 fair opportunities for the batting team to score) and the game generally lasting three to four hours, to Test matches played over five days. Traditionally cricketers play in all-white kit, but in limited overs cricket they wear club or team colours. In addition to the basic kit, some players wear protective gear to prevent injury caused by the ball, which is a hard, solid spheroid made of compressed leather with a slightly raised sewn seam enclosing a cork core layered with tightly wound string.'''))
 
 app = Flask(__name__)
 CORS(app)
@@ -515,14 +512,14 @@ def generate_qa():
     data = request.get_json()
     context = data['context']
     question_answer = get_mca_questions(context)
-    print(question_answer)
     return jsonify(question_answer)
 
 @app.route('/generate_summary', methods=['POST'])
 def generate_summary():
    data=request.get_json()
    context=data['context']  
-   summary=get_summary_in_points(context)
+   print(summarizer(context, summary_model, summary_tokenizer))
+   summary=get_summary_in_points(summarizer(context, summary_model, summary_tokenizer))
    return jsonify(summary)
 
 @app.route('/generate-title', methods=['POST'])
@@ -531,15 +528,12 @@ def generate_title():
    context=data['context']
    title=generate_context_title(context)
    return jsonify(title)
-   
+
 @app.route('/mobile-testing')
 def mobile_testing():
    return "Yes, It works on mobile too!!!"
 
-@app.route('/generate_learn_video')
-def generate_learn_video():
-    video_path = 'output_with_overlay.mp4'  # Update with the path to your video file
-    return send_file(video_path, mimetype='video/mp4')
+ 
 
 @app.route('/question-answering', methods=['POST'])
 def question_answering():
@@ -563,3 +557,22 @@ def send_message():
 if __name__ == '__main__':
     app.run(host='0.0.0.0',debug=True)
     
+
+
+
+
+# import requests
+
+# API_URL = "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0"
+# headers = {"Authorization": "Bearer xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}
+
+# def query(payload):
+# 	response = requests.post(API_URL, headers=headers, json=payload)
+# 	return response.content
+# image_bytes = query({
+# 	"inputs": "Astronaut riding a horse",
+# })
+# # You can access the image with PIL.Image for example
+# import io
+# from PIL import Image
+# image = Image.open(io.BytesIO(image_bytes))
