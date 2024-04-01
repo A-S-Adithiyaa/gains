@@ -1,0 +1,47 @@
+.qhis{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    border:2px solid var(--orange-shade);
+    border-radius: 5px;
+    padding-top: 1%;
+
+}
+
+.qtab{
+    display: grid;
+    grid-template-columns: 1fr 7fr 2fr 4fr 1fr;
+    border-bottom:2px solid var(--orange-shade);
+    padding:0.5%;
+
+}
+
+.qhistab{
+    margin-top: 2%;
+    display: flex;
+    width:100%;
+    height:max-content;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2%;
+
+}
+
+.qhead{
+    font-size: larger;
+    font-weight: bolder;
+    margin-bottom: 1%;
+}
+
+.link{
+    color: black;
+    text-decoration: none;
+
+    
+}
+
+
+  .qbody{
+    display: flex;
+    align-items: center;
+  }
