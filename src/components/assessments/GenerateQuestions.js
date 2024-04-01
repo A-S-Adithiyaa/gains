@@ -249,7 +249,7 @@ class GenerateQuestions extends Component {
           
         )}
         
-        {this.state.quiz&&<div className="qhistab">
+        {this.state.quiz.length!=0&&this.state.quiz&&<div className="qhistab">
           <div className="qhis">
             <div className="qtab">
               <div className="qhead">Sl No.</div>
