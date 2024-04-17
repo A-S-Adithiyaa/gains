@@ -163,7 +163,7 @@ function LoginPage() {
         </div>
       </div>
       <div className="login-right">
-        <img src="images/gains.gif" alt="GIF" />
+        <img src="images/gains-logo-with-name.svg" alt="GIF" />
       </div>
     </div>
   );

@@ -1,14 +1,14 @@
 import React from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import Image from "react-bootstrap/Image";
 
 function HeroSection() {
   return (
     <Container>
-      <Row md={12} sm={12}>
+      <Row className="mt-5 mb-5" md={12} sm={12}>
         <Col
           md={6}
-          className="d-flex flex-column align-items-start justify-content-end"
+          className="d-flex flex-column align-items-start justify-content-center"
         >
           <div className="text-container">
             <ul>
@@ -22,10 +22,15 @@ function HeroSection() {
         </Col>
         <Col
           md={6}
-          className="image-container d-flex align-items-end justify-content-end"
+          className="image-container d-flex align-items-end justify-content-center"
         >
-          <Image src="images/student_with_book.svg" alt="Placeholder" fluid />
+          <Image src="images/Webinar-bro 1.svg" alt="Placeholder" fluid />
         </Col>
+      </Row>
+      <Row className="align-items-center  justify-content-center">
+        <Button className="get-started-button" href="#/signup">
+          Get Started
+        </Button>
       </Row>
     </Container>
   );

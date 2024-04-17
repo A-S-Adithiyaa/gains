@@ -18,7 +18,9 @@ function NavbarSection() {
   return (
     <Navbar key={"lg"} expand={"lg"} className="bg-body-tertiary">
       <Container fluid>
-        <Navbar.Brand href="#/">GAINS</Navbar.Brand>
+        <Navbar.Brand className="gains-logo" href="#/">
+          G<span className="ai-colored">AI</span>NS
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-lg`} />
         <Navbar.Offcanvas
           id={`offcanvasNavbar-expand-lg`}
@@ -27,8 +29,11 @@ function NavbarSection() {
           className="offcanvas_mobile"
         >
           <Offcanvas.Header closeButton>
-            <Offcanvas.Title id={`offcanvasNavbarLabel-expand-lg`}>
-              GAINS
+            <Offcanvas.Title
+              className="gains-logo"
+              id={`offcanvasNavbarLabel-expand-lg`}
+            >
+              G<span className="ai-colored">AsdfsdfI</span>NS
             </Offcanvas.Title>
           </Offcanvas.Header>
           <Offcanvas.Body>
