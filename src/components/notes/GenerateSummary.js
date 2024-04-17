@@ -22,12 +22,13 @@ class GenerateQuestions extends Component {
   componentDidMount() {
     if (this.state.tid != null) {
       axios
-        .get("http://localhost:8080/jpa/" + this.state.tid + "/get-notes")
+        .get("http://localhost:8080/jpa/" + localStorage.getItem("current_topic") + "/get-notes")
         .then((response) => {
           this.setState({
-            summary: response.data.summary.split(".|"),
+            summary: response.data.split(".|"),
             generateSummary: true,
           });
+          console.log(response)
         })
         .catch((error) => console.log(error));
     }
@@ -113,7 +114,7 @@ class GenerateQuestions extends Component {
           generateSummary: true,
           summary: response.data,
         });
-
+        console.log(response.data)
         !val
           ? this.createNotes(response.data, tid)
           : this.editNotes(response.data, tid);

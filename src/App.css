@@ -590,3 +590,32 @@ textarea{
 .nav-pills .nav-link{
   color: var(--orange-shade);
 }
+
+
+
+.assi_res{
+  display: flex;
+
+}
+
+.assi_tab{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  background-color: #03FEC5;
+}
+
+.questions{
+  font-size: 200%;
+}
+
+.options{
+  border:2px solid var(--orange-shade);
+  border-radius: 10px;
+  max-width: 75%;
+  margin: 2%;
+  font-size: 150%;
+  color:#000000;
+  padding: 0.5%;
+
+}
+

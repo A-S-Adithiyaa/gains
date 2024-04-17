@@ -62,14 +62,12 @@ const QuestionCard = ({ randQustions }) => {
     setShowAns(false);
   };
   if (endQuiz) {
-    // axios.put("http://localhost:8080/jpa/"+localStorage.getItem("quiz")+"/edit-quiz",{
-    //   selectedAnswers:selected
-    // })
-    // .catch(error=>console.log(error))
-    // axios.put("http://localhost:8080/jpa/"+localStorage.getItem("quiz")+"/edit-quiz",{
-    //   marksScore:score
-    // })
-    // .catch(error=>console.log(error))
+    axios.put("http://localhost:8080/jpa/"+localStorage.getItem("quiz")+"/edit-quiz",{
+      selectedAnswers:selected,
+      marksScored:score,
+      totalMarks:selected.length
+    })
+    .catch(error=>console.log(error))
 
     console.log(selected)
     

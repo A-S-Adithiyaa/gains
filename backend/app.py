@@ -30,7 +30,7 @@ import os
 import torch
 from transformers import AutoTokenizer, T5ForConditionalGeneration
 from transformers import pipeline
-from test import make_video
+
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(device)
