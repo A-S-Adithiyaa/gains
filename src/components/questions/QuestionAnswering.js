@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Button, Col, Container, Form, Row, Stack } from "react-bootstrap";
-import { IoIosSend } from "react-icons/io";
+import { IoIosSend, IoIosCloseCircle } from "react-icons/io";
 import axios from "axios";
 import { CgAddR } from "react-icons/cg";
 import "../notes/notes.css";
@@ -239,12 +239,26 @@ class QuestionAnswering extends Component {
                   <Button className="send-button" onClick={this.handleSubmit}>
                     <IoIosSend />
                   </Button>
+                  <Button
+                    className="cancel-button"
+                    onClick={() => {
+                      this.setState({
+                        messages: [],
+                        tid: null,
+                      });
+                      localStorage.removeItem("current_topic");
+                      localStorage.removeItem("input");
+                      window.location.reload();
+                    }}
+                  >
+                    <IoIosCloseCircle />
+                  </Button>
                 </Stack>
               </Row>
             </Col>
           </Row>
         </Container>
-        <Button
+        {/* <Button
           className="new"
           onClick={() => {
             this.setState({
@@ -257,7 +271,7 @@ class QuestionAnswering extends Component {
           }}
         >
           <CgAddR size={40} />
-        </Button>
+        </Button> */}
       </>
     );
   }

@@ -126,7 +126,19 @@ class GenerateNotesVideo extends Component {
                 </Col>
               </Row>
               <Row>
-                <Col xs={12} className="text-center">
+                <Col xs={6} className="text-center">
+                  <button
+                    className="assessment-cancel-button "
+                    onClick={() => {
+                      localStorage.removeItem("current_topic");
+                      localStorage.removeItem("input");
+                      window.location.reload();
+                    }}
+                  >
+                    Clear
+                  </button>
+                </Col>
+                <Col xs={6} className="text-center">
                   <button
                     className="assessment-send-button"
                     onClick={this.fetchVideo}
@@ -138,7 +150,7 @@ class GenerateNotesVideo extends Component {
             </Col>
           </Row>
         </Container>
-        <Button
+        {/* <Button
           className="new"
           onClick={() => {
             localStorage.removeItem("current_topic");
@@ -147,7 +159,7 @@ class GenerateNotesVideo extends Component {
           }}
         >
           <CgAddR size={40} />
-        </Button>
+        </Button> */}
       </>
 
       // <VideoPlayer />

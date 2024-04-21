@@ -22,13 +22,17 @@ class GenerateQuestions extends Component {
   componentDidMount() {
     if (this.state.tid != null) {
       axios
-        .get("http://localhost:8080/jpa/" + localStorage.getItem("current_topic") + "/get-notes")
+        .get(
+          "http://localhost:8080/jpa/" +
+            localStorage.getItem("current_topic") +
+            "/get-notes"
+        )
         .then((response) => {
           this.setState({
             summary: response.data.split(".|"),
             generateSummary: true,
           });
-          console.log(response)
+          console.log(response);
         })
         .catch((error) => console.log(error));
     }
@@ -114,7 +118,7 @@ class GenerateQuestions extends Component {
           generateSummary: true,
           summary: response.data,
         });
-        console.log(response.data)
+        console.log(response.data);
         !val
           ? this.createNotes(response.data, tid)
           : this.editNotes(response.data, tid);
@@ -296,20 +300,32 @@ class GenerateQuestions extends Component {
                 </Col>
               </Row>
               <Row>
-                <Col xs={12} className="text-center">
+                <Col xs={6} className="text-center">
+                  <button
+                    className="assessment-cancel-button "
+                    onClick={() => {
+                      localStorage.removeItem("current_topic");
+                      localStorage.removeItem("input");
+                      window.location.reload();
+                    }}
+                  >
+                    Clear
+                  </button>
+                </Col>
+                <Col xs={6} className="text-center">
                   <Button
                     className="assessment-send-button"
                     variant="primary"
                     onClick={this.handleSubmit}
                   >
-                    {loading ? "Loading..." : "Generate"}
+                    {loading ? "Loading..." : "Generate Notes"}
                   </Button>
                 </Col>
               </Row>
             </Col>
           </Row>
         </Container>
-        <Button
+        {/* <Button
           className="new"
           onClick={() => {
             localStorage.removeItem("current_topic");
@@ -318,7 +334,7 @@ class GenerateQuestions extends Component {
           }}
         >
           <CgAddR size={40} />
-        </Button>
+        </Button> */}
       </>
     );
   }
