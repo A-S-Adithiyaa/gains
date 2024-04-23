@@ -1,37 +1,46 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { Button, Col, Container, Form, Row, Stack } from "react-bootstrap";
 
-
 function InstitutionDetails() {
-  const [institute,setInstitute]=useState("")
+  const [institute, setInstitute] = useState("");
   const [grade, setGrade] = useState("");
-  const [loading,setLoading]=useState(false);
+  const [loading, setLoading] = useState(false);
 
-  useEffect(()=>{
+  useEffect(() => {
     setLoading(false);
-    axios.get("http://localhost:8080/jpa/get-institute/"+localStorage.getItem("isLoggedIn"))
-    .then(response=>{
-        
-          setGrade(response.data.grade)
-          setInstitute(response.data.institute)
-       
-    })
-    setLoading(true)
-  },[])
+    axios
+      .get(
+        "http://localhost:8080/jpa/get-institute/" +
+          localStorage.getItem("isLoggedIn")
+      )
+      .then((response) => {
+        setGrade(response.data.grade);
+        setInstitute(response.data.institute);
+      });
+    setLoading(true);
+  }, []);
 
-
-  const save_changes=()=>{
-    const formdata={
-      "grade":grade,
-      "institute":institute
-
-    }
-      axios.put("http://localhost:8080/jpa/update-institute/"+localStorage.getItem("isLoggedIn"),formdata)
-      .catch(error=>console.log(error));
-  }
-
-
+  const save_changes = () => {
+    const formdata = {
+      grade: grade,
+      institute: institute,
+    };
+    axios
+      .put(
+        "http://localhost:8080/jpa/update-institute/" +
+          localStorage.getItem("isLoggedIn"),
+        formdata
+      )
+      .then((response) => {
+        toast.success("Details saved successfully!");
+      })
+      .catch((error) => {
+        toast.error("Failed to save details. Please try again later.");
+        console.error(error);
+      });
+  };
 
   return (
     <div>
@@ -54,7 +63,7 @@ function InstitutionDetails() {
                     <Form.Control
                       value={institute}
                       onChange={(e) => {
-                        setInstitute(e.target.value)
+                        setInstitute(e.target.value);
                       }}
                       type="text"
                     />
@@ -92,7 +101,9 @@ function InstitutionDetails() {
                 </Row> */}
               </Row>
             </Row>
-            <Button variant="success" onClick={save_changes}>Save</Button>
+            <Button variant="success" onClick={save_changes}>
+              Save
+            </Button>
           </Container>
         </div>
       ) : (

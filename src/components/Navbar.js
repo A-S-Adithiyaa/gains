@@ -58,18 +58,18 @@ function NavbarSection() {
                 <>
                   <Button
                     href="#/login"
-                    className="button-navbar"
+                    className="login-button button-navbar"
                     variant="dark"
                   >
-                    Log In
+                    LOGIN
                   </Button>
-                  <Button
+                  {/* <Button
                     href="#/signup"
                     className="button-navbar"
                     variant="dark"
                   >
                     Sign Up
-                  </Button>
+                  </Button> */}
                 </>
               ) : (
                 <NavDropdown

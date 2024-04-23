@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { consoleText } from "./TypingAnimation";
 import { toast } from "react-toastify";
-import axios from 'axios';
+import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
 import { Navigate, useNavigate } from "react-router-dom";
 import { Button, Col, Container, Form, Row, Stack } from "react-bootstrap";
@@ -19,11 +19,11 @@ function SignUpPage() {
     phone: "",
     dob: "",
   });
-  const [otp,setOtp]=useState(null);
-  const [id,setId] =useState(null);
-  const [verified,setVerified]=useState(false)
-  const navigate = useNavigate('');
-  const  [timer,setTimer]=useState(0);
+  const [otp, setOtp] = useState(null);
+  const [id, setId] = useState(null);
+  const [verified, setVerified] = useState(false);
+  const navigate = useNavigate("");
+  const [timer, setTimer] = useState(0);
 
   useEffect(() => {
     // Call the consoleText function with the specified parameters
@@ -42,53 +42,52 @@ function SignUpPage() {
       return;
     }
 
-    
-
     setIsLoading(true);
-    axios.post('http://localhost:8080/jpa/create-users', formData)
-          .then(function (response) {
-            console.log(response);
-            if (response.data!=="Account created") {
-              throw new Error(response.data);
-            }
-            toast("Account Created")
-            navigate('/login');
-          })
-          .catch(function (error) {
-            console.error("Sign up failed:", error);
+    axios
+      .post("http://localhost:8080/jpa/create-users", formData)
+      .then(function (response) {
+        console.log(response);
+        if (response.data !== "Account created") {
+          throw new Error(response.data);
+        }
+        toast("Account Created");
+        navigate("/login");
+      })
+      .catch(function (error) {
+        console.error("Sign up failed:", error);
 
-      // Show error toast
-      toast.error("Sign up failed. Please try again later.");
-          });
-          setIsLoading(false);
-        
-  //   try {
-  //     const response = await fetch("https://localhost:8080/jpa/create-users", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify(formData),
-  //     });
+        // Show error toast
+        toast.error("Sign up failed. Please try again later.");
+      });
+    setIsLoading(false);
 
-  //     if (!response.ok) {
-  //       throw new Error("Failed to sign up");
-  //     }
+    //   try {
+    //     const response = await fetch("https://localhost:8080/jpa/create-users", {
+    //       method: "POST",
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //       },
+    //       body: JSON.stringify(formData),
+    //     });
 
-  //     // Handle successful sign-up
-  //     console.log("Sign up successful!");
+    //     if (!response.ok) {
+    //       throw new Error("Failed to sign up");
+    //     }
 
-  //     // Show success toast
-  //     toast.success("Sign up successful!");
-  //   } catch (error) {
-  //     // Handle API call errors
-  //     console.error("Sign up failed:", error);
+    //     // Handle successful sign-up
+    //     console.log("Sign up successful!");
 
-  //     // Show error toast
-  //     toast.error("Sign up failed. Please try again later.");
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
+    //     // Show success toast
+    //     toast.success("Sign up successful!");
+    //   } catch (error) {
+    //     // Handle API call errors
+    //     console.error("Sign up failed:", error);
+
+    //     // Show error toast
+    //     toast.error("Sign up failed. Please try again later.");
+    //   } finally {
+    //     setIsLoading(false);
+    //   }
   };
 
   const handleChange = (event) => {
@@ -150,40 +149,38 @@ function SignUpPage() {
     return dob instanceof Date && !isNaN(dob) && dob < today;
   };
 
-  const send_otp=(e)=>{
-    axios.post("http://localhost:8080/jpa/verify-email",
-    {
-        email:formData.email
-    })
-    .then(response=>{
-            setId(response.data)
-    })
-    .catch(error=>console.log(error));
-    countdownTimer(60)
-        function countdownTimer(counter) {
-            if (counter >= 0) {
-              setTimeout(function() {
-                setTimer(counter)
-                countdownTimer(counter - 1);
-              }, 1000);
-            }
-            else{
-              setId(null);
-              toast('OTP expired')
-            }
-
-          }
+  const send_otp = (e) => {
+    axios
+      .post("http://localhost:8080/jpa/verify-email", {
+        email: formData.email,
+      })
+      .then((response) => {
+        setId(response.data);
+      })
+      .catch((error) => console.log(error));
+    countdownTimer(60);
+    function countdownTimer(counter) {
+      if (counter >= 0) {
+        setTimeout(function () {
+          setTimer(counter);
+          countdownTimer(counter - 1);
+        }, 1000);
+      } else {
+        setId(null);
+        toast("OTP expired");
+      }
+    }
     e.preventDefault();
-}
+  };
 
-const verify_otp=()=>{
-    axios.post("http://localhost:8080/jpa/"+id+"/verify-otp",
-    {
-        "otp":otp
-    })
-    .then(response=>setVerified(response.data))
-    .catch(error=>console.log(error));
-}
+  const verify_otp = () => {
+    axios
+      .post("http://localhost:8080/jpa/" + id + "/verify-otp", {
+        otp: otp,
+      })
+      .then((response) => setVerified(response.data))
+      .catch((error) => console.log(error));
+  };
 
   return (
     <div className="login-container">
@@ -277,27 +274,36 @@ const verify_otp=()=>{
                     className="form-control mt-1"
                     name="otp"
                     value={otp}
-                    onChange={(e)=>setOtp(e.target.value)}
+                    onChange={(e) => setOtp(e.target.value)}
                     placeholder="OTP"
                   />
                 </div>
-                {!verified&&<Button variant="success" className="form-control mt-1" disabled={id==null && timer!=0} onClick={(e)=>{
-                    id?verify_otp(e):send_otp(e)
-                }}>
-                    {id?"Verify OTP":timer==0?"Send OTP":timer}
-                  </Button>}
-                {verified&&<div className="d-grid gap-2 mt-3">
-                  <button type="submit" className="btn btn-primary">
-                    {isLoading ? "Signing up..." : "Submit"}
-                  </button>
-                </div>}
+                {!verified && (
+                  <Button
+                    variant="success"
+                    className="form-control mt-1"
+                    disabled={id == null && timer != 0}
+                    onClick={(e) => {
+                      id ? verify_otp(e) : send_otp(e);
+                    }}
+                  >
+                    {id ? "Verify OTP" : timer == 0 ? "Send OTP" : timer}
+                  </Button>
+                )}
+                {verified && (
+                  <div className="d-grid gap-2 mt-3">
+                    <button type="submit" className="btn btn-primary">
+                      {isLoading ? "Signing up..." : "Submit"}
+                    </button>
+                  </div>
+                )}
               </div>
             </form>
           </div>
         </div>
       </div>
       <div className="login-right">
-        <img src="images/gains.gif" alt="GIF" />
+        <img src="images/gains-logo-with-name.svg" alt="GIF" />
       </div>
     </div>
   );

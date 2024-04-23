@@ -3,6 +3,8 @@ import { Container, Row, Col, Button } from "react-bootstrap";
 import Image from "react-bootstrap/Image";
 
 function HeroSection() {
+  const isLoggedIn = localStorage.getItem("isLoggedIn") || false;
+
   return (
     <Container>
       <Row className="mt-5 mb-5" md={12} sm={12}>
@@ -28,9 +30,11 @@ function HeroSection() {
         </Col>
       </Row>
       <Row className="align-items-center  justify-content-center">
-        <Button className="get-started-button" href="#/signup">
-          Get Started
-        </Button>
+        {!isLoggedIn && (
+          <Button className="get-started-button" href="#/signup">
+            Get Started
+          </Button>
+        )}
       </Row>
     </Container>
   );
