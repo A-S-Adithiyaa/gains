@@ -65,8 +65,8 @@ class GenerateQuestions extends Component {
         .then((response) => {
           this.setState({
             title: response.data.title,
-            loading: false,
           });
+          localStorage.setItem("topic",response.data.title)
 
           fetch(
             "http://localhost:8080/jpa/" + this.state.id + "/create-topics",
@@ -89,9 +89,7 @@ class GenerateQuestions extends Component {
               this.setState({
                 tid: data,
               });
-              this.setState({
-                loading: false,
-              });
+              
               this.generateSumm(data);
             })
             .catch(function (error) {
@@ -314,6 +312,8 @@ class GenerateQuestions extends Component {
           onClick={() => {
             localStorage.removeItem("current_topic");
             localStorage.removeItem("input");
+            localStorage.removeItem("topic");
+            localStorage.removeItem("quiz");
             window.location.reload();
           }}
         >
