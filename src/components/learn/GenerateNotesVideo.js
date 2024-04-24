@@ -15,11 +15,12 @@ class GenerateNotesVideo extends Component {
       loading: false,
       generateSummary: false,
       videoUrl: "",
-      summary: [],
+      summary: ["The fielding team tries to prevent runs from being scored by dismissing batters (so they are 'out')"],
       showVideo: false,
       title: "",
       tid: localStorage.getItem("current_topic"),
       id: localStorage.getItem("isLoggedIn"),
+      video:null
     };
   }
 
@@ -86,6 +87,31 @@ class GenerateNotesVideo extends Component {
         }
       )
       .then((response) => {
+          this.setState({
+            video:response
+          })
+          axios.post("http://localhost:8080/jpa/"+localStorage.getItem("current_topic")+"/create-video",{
+            topic:localStorage.getItem("topic"),
+            content:this.state.summary,
+          })
+          .then(res=>{
+            console.log(this.state.video)
+            console.log(response)
+            const formdata=new FormData();
+            formdata.append('file',response)
+
+            console.log(formdata)
+
+            axios.put("http://localhost:8080/jpa/"+res.data+"/create-video",formdata,{
+              headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+            }
+            
+            )
+            .catch(err=>console.log(err))
+          })
+          .catch(err=>console.log(err))
         const url = URL.createObjectURL(response.data);
         this.setState({ videoUrl: url, loading: false });
       })

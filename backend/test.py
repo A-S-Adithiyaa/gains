@@ -20,8 +20,11 @@ def create_video_clip(image_path, audio_path):
 
 # Define function to add text to image
 def add_text_to_image(image, text):
+    print("inside ati1")
     draw = ImageDraw.Draw(image)
+    print("inside ati2")
     font = ImageFont.truetype("arial.ttf", 24)
+    print("inside ati3")
     draw.text((10, 10), text, fill="white", font=font)
     return image
 
@@ -66,15 +69,20 @@ def make_video(texts):
     try:
         images = []
         audios = []
+        
         for text in texts:
             image_bytes = query_text({"inputs": text})
             audio_bytes = query_audio({"inputs": text})
-            
+            print("inside try1")
             image = Image.open(io.BytesIO(image_bytes))
-            image_with_text = add_text_to_image(image, text)
-            images.append(image_with_text)
+            print("inside try2")
+            # image_with_text = add_text_to_image(image, text)
+            print("inside try3")
+            # images.append(image_with_text)
+            print("inside try4")
             
             audios.append(io.BytesIO(audio_bytes))
+            print("inside try5")
 
         print("added text to image")
 
@@ -141,8 +149,8 @@ def make_video(texts):
 
 
         return "True"
-    except:
-        return "False"
+    except Exception as e:
+        print(e)
     
 
 app = Flask(__name__)
@@ -166,7 +174,7 @@ def generate_learn_video():
     data=request.get_json()
     summary=data['context']
     make_video(summary)
-    video=send_file("./TutorialVideo.mp4")  
+    video=send_file("TutorialVideo.mp4")  
 
     return video
 

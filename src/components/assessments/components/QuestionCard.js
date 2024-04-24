@@ -5,6 +5,7 @@ import ShowMessage from "./PageElements/ShowMessage";
 import axios from "axios";
 import { Box, Button } from "./PageElements/UIElements";
 import ShowConfetti from "./ShowConfetti";
+import { useNavigate } from "react-router-dom";
 const BasicGrid = styled.div`
   display: grid;
   gap: 1rem;
@@ -17,6 +18,7 @@ const QuestionCard = ({ randQustions }) => {
   const [avg, setAvg] = useState(0);
   const [showAns, setShowAns] = useState(false);
   const [selected,setSelected]=useState([]);
+  const navigate =useNavigate("");
 
   //function to calc score and show correct answer
   const handleAnswerClick = (isCorrect, e,ind) => {
@@ -51,15 +53,17 @@ const QuestionCard = ({ randQustions }) => {
   const endOfQuiz = () => {
     setEndQuiz(true);
     setCurrentIndex((prev) => prev + 1);
-    setAvg((score / currentIndex) * 100);
+    setAvg((score / currentIndex
+    ) * 100);
   };
 
   //function to result all variables
   const reset = () => {
-    setEndQuiz(false);
+    window.location.reload()
     setCurrentIndex(0);
     setScore(0);
     setShowAns(false);
+   
   };
   if (endQuiz) {
     axios.put("http://localhost:8080/jpa/"+localStorage.getItem("quiz")+"/edit-quiz",{
@@ -84,7 +88,7 @@ const QuestionCard = ({ randQustions }) => {
               <strong>{avg.toFixed(1)}%</strong>
             </p>
           </div>
-          <Button onClick={reset}>Start over?</Button>
+          <Button onClick={reset}>Back</Button>
         </Box>
       </>
     );
@@ -120,7 +124,7 @@ const QuestionCard = ({ randQustions }) => {
           ))}
         </BasicGrid>
 
-        <div className="bottom">
+        {/* <div className="bottom">
           <Button
             className="secondary"
             onClick={seeResults}
@@ -128,7 +132,7 @@ const QuestionCard = ({ randQustions }) => {
           >
             See Results
           </Button>
-        </div>
+        </div> */}
       </Box>
     </>
   );

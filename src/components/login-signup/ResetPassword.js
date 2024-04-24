@@ -17,10 +17,12 @@ const ResetPassword = () => {
     const navigate=useNavigate("");
     const  [timer,setTimer]=useState(0);
     const [changeEmail,setChangeEmail]=useState(false)
+    const [dis,setDis]=useState(false);
   
 
     const send_otp=(e)=>{
         setChangeEmail(false);
+        setDis(true)
         axios.post("http://localhost:8080/jpa/forgot-password",
         {
             email:email
@@ -29,12 +31,15 @@ const ResetPassword = () => {
             if(response.data===-1){
                 toast('User does not exist');
                 setChangeEmail(true);
+                setDis(false)
             }
             else{
+                
                 setId(response.data)
                 countdownTimer(60)
-
+                
             }
+            
         })
         .catch(error=>console.log(error));
 
@@ -49,6 +54,7 @@ const ResetPassword = () => {
             }
             else{
                 toast("OTP expired");
+                setDis(false)
             }
           }
         e.preventDefault();
@@ -60,6 +66,7 @@ const ResetPassword = () => {
             "otp":otp
         })
         .then(response=>{
+            console.log(response.data)
             setVerified(response.data)
             if(!response.data){
                 toast('Wrong OTP')
@@ -113,7 +120,7 @@ const ResetPassword = () => {
                         <label className="label">Email</label><br/>
                         <div className="reset_row">
                             <input type="text" className="inputs" placeholder="Email" value={email} onChange={(e)=>setEmail(e.target.value)}/>
-                            <Button variant="success" type="submit" className="reset_btn" disabled={timer!=0 & !changeEmail}>
+                            <Button variant="success" type="submit" className="reset_btn" disabled={dis || (timer!=0 & !changeEmail)}>
                                  {timer==0||changeEmail?"Send OTP":timer}
                             </Button>                            
                         </div>

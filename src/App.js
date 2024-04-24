@@ -12,7 +12,7 @@ import ProfileLanding from "./components/profile/ProfileLanding";
 import Navbar from "./components/Navbar";
 import QuestionsLanding from "./components/questions/QuestionsLAnding";
 import AssessmentReview from "./components/assessments/AssessmentReview";
-// import ResetPassword from "./components/login-signup/ResetPassword";
+import ResetPassword from "./components/login-signup/ResetPassword";
 
 function App() {
   return (
@@ -29,7 +29,7 @@ function App() {
         <Route exact path="/questions" element={<QuestionsLanding />} />
         <Route exact path="/learn" element={<LearnLanding />} />
         <Route exact path="/review/:qid" element={<AssessmentReview/>} />
-        {/* <Route exact path="/reset-password" element={<ResetPassword />} /> */}
+        <Route exact path="/reset-password" element={<ResetPassword />} />
       </Routes>
     </>
   );
