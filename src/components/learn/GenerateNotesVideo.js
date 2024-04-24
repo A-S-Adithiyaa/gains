@@ -4,6 +4,7 @@ import ListGroup from "react-bootstrap/ListGroup";
 import axios from "axios";
 import { CgAddR } from "react-icons/cg";
 import VideoPlayer from "./VideoPlayer";
+import session from "../../Variables";
 // import Video_path from "../../../backend/TutorialVideo.mp4";
 // import "./notes.css";
 
@@ -15,12 +16,14 @@ class GenerateNotesVideo extends Component {
       loading: false,
       generateSummary: false,
       videoUrl: "",
-      summary: ["The fielding team tries to prevent runs from being scored by dismissing batters (so they are 'out')"],
+      summary: [
+        "The fielding team tries to prevent runs from being scored by dismissing batters (so they are 'out')",
+      ],
       showVideo: false,
       title: "",
       tid: localStorage.getItem("current_topic"),
       id: localStorage.getItem("isLoggedIn"),
-      video:null
+      video: null,
     };
   }
 
@@ -58,7 +61,7 @@ class GenerateNotesVideo extends Component {
   generateSumm = () => {
     this.setState({ loading: true });
     axios
-      .post("http://10.100.50.225:5000/generate_summary", {
+      .post(session.naqBaseAPIUrl + "generate_summary", {
         context: this.state.input,
       })
       .then((response) => {
@@ -75,7 +78,7 @@ class GenerateNotesVideo extends Component {
   fetchVideo = (videosummary) => {
     axios
       .post(
-        "http://localhost:5005/generate_learn_video",
+        session.videoGenerationCompleteAPIUrl,
         {
           context: videosummary,
         },
@@ -87,31 +90,40 @@ class GenerateNotesVideo extends Component {
         }
       )
       .then((response) => {
-          this.setState({
-            video:response
-          })
-          axios.post("http://localhost:8080/jpa/"+localStorage.getItem("current_topic")+"/create-video",{
-            topic:localStorage.getItem("topic"),
-            content:this.state.summary,
-          })
-          .then(res=>{
-            console.log(this.state.video)
-            console.log(response)
-            const formdata=new FormData();
-            formdata.append('file',response)
-
-            console.log(formdata)
-
-            axios.put("http://localhost:8080/jpa/"+res.data+"/create-video",formdata,{
-              headers: {
-                'Content-Type': 'multipart/form-data'
+        this.setState({
+          video: response,
+        });
+        axios
+          .post(
+            session.springbootBaseUrl +
+              localStorage.getItem("current_topic") +
+              "/create-video",
+            {
+              topic: localStorage.getItem("topic"),
+              content: this.state.summary,
             }
-            }
-            
-            )
-            .catch(err=>console.log(err))
+          )
+          .then((res) => {
+            console.log(this.state.video);
+            console.log(response);
+            const formdata = new FormData();
+            formdata.append("file", response);
+
+            console.log(formdata);
+
+            axios
+              .put(
+                session.springbootBaseUrl + res.data + "/create-video",
+                formdata,
+                {
+                  headers: {
+                    "Content-Type": "multipart/form-data",
+                  },
+                }
+              )
+              .catch((err) => console.log(err));
           })
-          .catch(err=>console.log(err))
+          .catch((err) => console.log(err));
         const url = URL.createObjectURL(response.data);
         this.setState({ videoUrl: url, loading: false });
       })

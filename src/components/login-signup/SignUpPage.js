@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Navigate, useNavigate } from "react-router-dom";
 import { Button, Col, Container, Form, Row, Stack } from "react-bootstrap";
 import { IoIosSend } from "react-icons/io";
+import session from "../../Variables";
 
 toast.configure();
 
@@ -44,7 +45,7 @@ function SignUpPage() {
 
     setIsLoading(true);
     axios
-      .post("http://localhost:8080/jpa/create-users", formData)
+      .post(session.springbootBaseUrl + "create-users", formData)
       .then(function (response) {
         console.log(response);
         if (response.data !== "Account created") {
@@ -151,7 +152,7 @@ function SignUpPage() {
 
   const send_otp = (e) => {
     axios
-      .post("http://localhost:8080/jpa/verify-email", {
+      .post(session.springbootBaseUrl + "verify-email", {
         email: formData.email,
       })
       .then((response) => {
@@ -175,7 +176,7 @@ function SignUpPage() {
 
   const verify_otp = () => {
     axios
-      .post("http://localhost:8080/jpa/" + id + "/verify-otp", {
+      .post(session.springbootBaseUrl + id + "/verify-otp", {
         otp: otp,
       })
       .then((response) => setVerified(response.data))
