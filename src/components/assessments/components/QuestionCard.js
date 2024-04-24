@@ -120,7 +120,7 @@ const QuestionCard = ({ randQustions }) => {
           ))}
         </BasicGrid>
 
-        <div className="bottom">
+        {/* <div className="bottom">
           <Button
             className="secondary"
             onClick={seeResults}
@@ -128,7 +128,7 @@ const QuestionCard = ({ randQustions }) => {
           >
             See Results
           </Button>
-        </div>
+        </div> */}
       </Box>
     </>
   );
