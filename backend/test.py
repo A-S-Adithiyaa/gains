@@ -60,7 +60,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 def make_video(texts):
     print("inside make video")
-    # List to store video clips for each pair
+    
     video_clips.clear()
 
     try:
@@ -170,4 +170,4 @@ def generate_learn_video():
 
     return video
 
-app.run(debug=True)
+app.run(debug=True, port=5005)

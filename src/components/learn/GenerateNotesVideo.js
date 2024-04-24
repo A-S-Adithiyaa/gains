@@ -54,15 +54,29 @@ class GenerateNotesVideo extends Component {
   //     });
   // };
 
-  fetchVideo = () => {
+  generateSumm = () => {
     this.setState({ loading: true });
     axios
+      .post("http://10.100.50.225:5000/generate_summary", {
+        context: this.state.input,
+      })
+      .then((response) => {
+        this.setState({
+          summary: response.data,
+        });
+        this.fetchVideo(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching summary:", error);
+      });
+  };
+
+  fetchVideo = (videosummary) => {
+    axios
       .post(
-        "http://localhost:5000/generate_learn_video",
+        "http://localhost:5005/generate_learn_video",
         {
-          context: [
-            "The fielding team tries to prevent runs from being scored by dismissing batters (so they are 'out')",
-          ],
+          context: videosummary,
         },
         {
           headers: {
@@ -141,7 +155,7 @@ class GenerateNotesVideo extends Component {
                 <Col xs={6} className="text-center">
                   <button
                     className="assessment-send-button"
-                    onClick={this.fetchVideo}
+                    onClick={this.generateSumm}
                   >
                     {loading ? "Loading..." : "Generate Video"}
                   </button>

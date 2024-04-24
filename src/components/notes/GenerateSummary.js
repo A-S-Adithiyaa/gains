@@ -63,7 +63,7 @@ class GenerateQuestions extends Component {
     const { input } = this.state;
     if (this.state.tid === null) {
       await axios
-        .post("http://localhost:5000/generate-title", {
+        .post("http://10.100.50.225:5000/generate-title", {
           context: input,
         })
         .then((response) => {
@@ -109,7 +109,7 @@ class GenerateQuestions extends Component {
 
   generateSumm = (tid, val) => {
     axios
-      .post("http://localhost:5000/generate_summary", {
+      .post("http://10.100.50.225:5000/generate_summary", {
         context: this.state.input,
       })
       .then((response) => {
