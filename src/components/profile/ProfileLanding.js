@@ -14,16 +14,16 @@ import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import { Col, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import session from "../../Variables";
 
 const ProfileLanding = () => {
+  const navigate = useNavigate("");
 
-  const navigate=useNavigate("");
-
-  useEffect(()=>{
-    if(localStorage.getItem("isLoggedIn")===null){
+  useEffect(() => {
+    if (localStorage.getItem("isLoggedIn") === null) {
       navigate("/");
     }
-  })
+  });
   const [activeMenuItem, setActiveMenuItem] = useState("personal-info"); // State to track active menu item
 
   let activeComponent;

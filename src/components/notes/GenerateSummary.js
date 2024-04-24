@@ -3,6 +3,7 @@ import { Container, Row, Col, Form, Button, Image } from "react-bootstrap";
 import ListGroup from "react-bootstrap/ListGroup";
 import axios from "axios";
 import { CgAddR } from "react-icons/cg";
+import session from "../../Variables";
 import "./notes.css";
 
 class GenerateQuestions extends Component {
@@ -23,7 +24,7 @@ class GenerateQuestions extends Component {
     if (this.state.tid != null) {
       axios
         .get(
-          "http://localhost:8080/jpa/" +
+          session.springbootBaseUrl +
             localStorage.getItem("current_topic") +
             "/get-notes"
         )
@@ -44,7 +45,7 @@ class GenerateQuestions extends Component {
       input: inputValue,
     });
     if (this.state.tid !== null) {
-      fetch("http://localhost:8080/jpa/" + this.state.tid + "/edit-content", {
+      fetch(session.springbootBaseUrl + this.state.tid + "/edit-content", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -70,21 +71,18 @@ class GenerateQuestions extends Component {
           this.setState({
             title: response.data.title,
           });
-          localStorage.setItem("topic",response.data.title)
+          localStorage.setItem("topic", response.data.title);
 
-          fetch(
-            "http://localhost:8080/jpa/" + this.state.id + "/create-topics",
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                topic: response.data.title,
-                content: this.state.input,
-              }),
-            }
-          )
+          fetch(session.springbootBaseUrl + this.state.id + "/create-topics", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              topic: response.data.title,
+              content: this.state.input,
+            }),
+          })
             .then((res) => {
               return res.json();
             })
@@ -93,7 +91,7 @@ class GenerateQuestions extends Component {
               this.setState({
                 tid: data,
               });
-              
+
               this.generateSumm(data);
             })
             .catch(function (error) {
@@ -125,7 +123,7 @@ class GenerateQuestions extends Component {
 
   createNotes = (data, tid) => {
     console.log(data);
-    fetch("http://localhost:8080/jpa/" + tid + "/create-notes", {
+    fetch(session.springbootBaseUrl + tid + "/create-notes", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -141,7 +139,7 @@ class GenerateQuestions extends Component {
 
   editNotes = (data, tid) => {
     console.log("inside edit");
-    fetch("http://localhost:8080/jpa/" + tid + "/edit-notes", {
+    fetch(session.springbootBaseUrl + tid + "/edit-notes", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -170,7 +168,7 @@ class GenerateQuestions extends Component {
   //     loading:false
   //   });
 
-  //     fetch("http://localhost:8080/jpa/"+id+"/create-topics",{
+  //     fetch(session.springbootBaseUrl+id+"/create-topics",{
   //       method: 'POST',
   //       headers: {
   //         'Content-Type': 'application/json',
@@ -221,7 +219,7 @@ class GenerateQuestions extends Component {
   //   console.log(this.state.summary)
   //   console.log(this.state.tid)
   // })
-  // fetch("http://localhost:8080/jpa/"+this.state.tid+"/create-notes",{
+  // fetch(session.springbootBaseUrl+this.state.tid+"/create-notes",{
   //   method: 'POST',
   //   headers: {
   //     'Content-Type': 'application/json',

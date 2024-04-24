@@ -4,6 +4,7 @@ import { IoIosSend, IoIosCloseCircle } from "react-icons/io";
 import axios from "axios";
 import { CgAddR } from "react-icons/cg";
 import "../notes/notes.css";
+import session from "../../Variables";
 
 const userIcons = {
   user1: "images/bot.png",
@@ -31,7 +32,7 @@ class QuestionAnswering extends Component {
   componentDidMount() {
     if (this.state.tid != null) {
       axios
-        .get("http://localhost:8080/jpa/" + this.state.tid + "/get-doubt")
+        .get(session.springbootBaseUrl + this.state.tid + "/get-doubt")
         .then((response) => {
           this.setState({
             messages: response.data,
@@ -48,7 +49,7 @@ class QuestionAnswering extends Component {
       input: inputValue,
     });
     if (this.state.tid !== null) {
-      fetch("http://localhost:8080/jpa/" + this.state.tid + "/edit-content", {
+      fetch(session.springbootBaseUrl + this.state.tid + "/edit-content", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -80,7 +81,7 @@ class QuestionAnswering extends Component {
     try {
       if (this.state.tid === null) {
         await axios
-          .post("http://localhost:5000/generate-title", {
+          .post(session.naqBaseAPIUrl + "generate-title", {
             context: input,
           })
           .then((response) => {
@@ -90,7 +91,7 @@ class QuestionAnswering extends Component {
             });
 
             fetch(
-              "http://localhost:8080/jpa/" + this.state.id + "/create-topics",
+              session.springbootBaseUrl + this.state.id + "/create-topics",
               {
                 method: "POST",
                 headers: {
@@ -120,20 +121,23 @@ class QuestionAnswering extends Component {
           });
       }
 
-      const response = await fetch("http://localhost:5000/question-answering", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ context: input, question: question }),
-      });
+      const response = await fetch(
+        session.naqBaseAPIUrl + "question-answering",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ context: input, question: question }),
+        }
+      );
 
       if (response.ok) {
         const data = await response.json();
         // Update the loading message with the actual response data
 
         await fetch(
-          "http://localhost:8080/jpa/" + this.state.tid + "/create-doubt",
+          session.springbootBaseUrl + this.state.tid + "/create-doubt",
           {
             method: "POST",
             headers: {
@@ -144,7 +148,7 @@ class QuestionAnswering extends Component {
         ).catch((error) => console.log(error));
 
         await fetch(
-          "http://localhost:8080/jpa/" + this.state.tid + "/create-doubt",
+          session.springbootBaseUrl + this.state.tid + "/create-doubt",
           {
             method: "POST",
             headers: {

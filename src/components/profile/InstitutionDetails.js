@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Button, Col, Container, Form, Row, Stack } from "react-bootstrap";
+import session from "../../Variables";
 
 function InstitutionDetails() {
   const [institute, setInstitute] = useState("");
@@ -12,7 +13,8 @@ function InstitutionDetails() {
     setLoading(false);
     axios
       .get(
-        "http://localhost:8080/jpa/get-institute/" +
+        session.springbootBaseUrl +
+          "get-institute/" +
           localStorage.getItem("isLoggedIn")
       )
       .then((response) => {
@@ -29,7 +31,8 @@ function InstitutionDetails() {
     };
     axios
       .put(
-        "http://localhost:8080/jpa/update-institute/" +
+        session.springbootBaseUrl +
+          "update-institute/" +
           localStorage.getItem("isLoggedIn"),
         formdata
       )

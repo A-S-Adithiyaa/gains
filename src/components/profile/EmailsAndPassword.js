@@ -3,13 +3,14 @@ import { Button, Col, Container, Form, Row, Stack } from "react-bootstrap";
 import { TiTick } from "react-icons/ti";
 import { toast } from "react-toastify";
 import axios from "axios";
+import session from "../../Variables";
 
 function EmailsAndPassword() {
-  const [email,setEmail]=useState("");
+  const [email, setEmail] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const [loading,setLoading]=useState(true);
+  const [loading, setLoading] = useState(true);
 
   const handleNewPasswordChange = (event) => {
     setNewPassword(event.target.value);
@@ -19,26 +20,36 @@ function EmailsAndPassword() {
     setConfirmPassword(event.target.value);
   };
 
-  useEffect(()=>{
-    axios.get("http://localhost:8080/jpa/"+localStorage.getItem("isLoggedIn")+"/get-email")
-    .then(response=>setEmail(response.data))
-    .catch(error=>console.log(error))
-  },[])
+  useEffect(() => {
+    axios
+      .get(
+        session.springbootBaseUrl +
+          localStorage.getItem("isLoggedIn") +
+          "/get-email"
+      )
+      .then((response) => setEmail(response.data))
+      .catch((error) => console.log(error));
+  }, []);
 
-  const save_password=()=>{
-    if(newPassword===confirmPassword){
-      axios.put("http://localhost:8080/jpa/"+localStorage.getItem("isLoggedIn")+"/change-password",{
-        "password":newPassword
-      })
-      .then(()=>toast('Password Updated'))
-      .catch(error=>console.log(error))
-      setConfirmPassword("")
-      setNewPassword("")
-    }
-    else{
+  const save_password = () => {
+    if (newPassword === confirmPassword) {
+      axios
+        .put(
+          session.springbootBaseUrl +
+            localStorage.getItem("isLoggedIn") +
+            "/change-password",
+          {
+            password: newPassword,
+          }
+        )
+        .then(() => toast("Password Updated"))
+        .catch((error) => console.log(error));
+      setConfirmPassword("");
+      setNewPassword("");
+    } else {
       toast("Password doesn't match");
     }
-  }
+  };
 
   return (
     <div>
@@ -57,11 +68,7 @@ function EmailsAndPassword() {
               <Row>
                 <Col sm={6}>
                   <Form.Label>Email</Form.Label>
-                  <Form.Control
-                    readOnly
-                    value={email}
-                    type="text"
-                  />
+                  <Form.Control readOnly value={email} type="text" />
                 </Col>
                 {/* <Col sm={6}>
                   <Form.Label>Password</Form.Label>
@@ -76,7 +83,7 @@ function EmailsAndPassword() {
                 <Col sm={6}>
                   <Form.Label>New Password</Form.Label>
                   <Form.Control
-                  value={newPassword}
+                    value={newPassword}
                     onChange={handleNewPasswordChange}
                     type="password"
                   />
@@ -84,17 +91,17 @@ function EmailsAndPassword() {
                 <Col sm={6}>
                   <Form.Label>Confirm Password</Form.Label>
                   <Form.Control
-                  value={confirmPassword}
+                    value={confirmPassword}
                     onChange={handleConfirmPasswordChange}
                     type="password"
                   />
                 </Col>
               </Row>
             </Row>
-              <Button variant="success" onClick={save_password}>
-                <TiTick style={{ marginRight: "5px" }} />
-                Save
-              </Button>
+            <Button variant="success" onClick={save_password}>
+              <TiTick style={{ marginRight: "5px" }} />
+              Save
+            </Button>
 
             {/* <Row>
               <Col>

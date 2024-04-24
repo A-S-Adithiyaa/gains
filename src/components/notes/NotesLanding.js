@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import GenerateSummary from "./GenerateSummary";
+import session from "../../Variables";
 
 function NotesLanding() {
   const navigate = useNavigate();

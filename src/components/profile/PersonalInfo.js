@@ -10,6 +10,7 @@ import { CiEdit } from "react-icons/ci";
 import { TiTick } from "react-icons/ti";
 import { InputGroup, Stack } from "react-bootstrap";
 import { toast } from "react-toastify";
+import session from "../../Variables";
 import axios from "axios";
 function PersonalInfo() {
   const [image, setImage] = useState(
@@ -30,7 +31,8 @@ function PersonalInfo() {
     setLoading(false);
     axios
       .get(
-        "http://localhost:8080/jpa/get-users/" +
+        session.springbootBaseUrl +
+          "get-users/" +
           localStorage.getItem("isLoggedIn")
       )
       .then((response) => {
@@ -87,7 +89,8 @@ function PersonalInfo() {
     console.log(formdata);
     axios
       .put(
-        "http://localhost:8080/jpa/update-info/" +
+        session.springbootBaseUrl +
+          "update-info/" +
           localStorage.getItem("isLoggedIn"),
         formdata
       )
