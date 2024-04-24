@@ -10,6 +10,7 @@ import "../notes/notes.css";
 import { Link } from "react-router-dom";
 import "./ar.css";
 import { GoArrowUpRight } from "react-icons/go";
+import session from "../../Variables";
 
 const GlobalStyle = createGlobalStyle`
   body{
@@ -40,7 +41,7 @@ class GenerateQuestions extends Component {
   componentDidMount() {
     axios
       .get(
-        "http://localhost:8080/jpa/" +
+        session.springbootBaseUrl +
           localStorage.getItem("current_topic") +
           "/get-quiz"
       )
@@ -68,7 +69,7 @@ class GenerateQuestions extends Component {
 
     if (localStorage.getItem("current_topic") === null) {
       await axios
-        .post("http://localhost:5000/generate-title", {
+        .post(session.naqBaseAPIUrl+"generate-title", {
           context: input,
         })
         .then((response) => {
@@ -80,7 +81,7 @@ class GenerateQuestions extends Component {
           localStorage.setItem("topic", response.data.title);
 
           fetch(
-            "http://localhost:8080/jpa/" + localStorage.getItem("isLoggedIn")+ "/create-topics",
+            session.springbootBaseUrl + localStorage.getItem("isLoggedIn")+ "/create-topics",
             {
               method: "POST",
               headers: {
@@ -119,13 +120,13 @@ class GenerateQuestions extends Component {
     const { input } = this.state;
 
     axios
-      .post("http://localhost:8080/jpa/" + data + "/create-quiz", {
+      .post(session.springbootBaseUrl + data + "/create-quiz", {
         topic: localStorage.getItem("topic"),
       })
       .then((response) => localStorage.setItem("quiz", response.data))
       .catch((error) => console.log(error));
 
-    const response = await axios.post("http://localhost:5000/generate_qa", {
+    const response = await axios.post(session.naqBaseAPIUrl+"generate_qa", {
       context: input,
     });
     // console.log(response.data);
@@ -153,7 +154,7 @@ class GenerateQuestions extends Component {
       console.log(options);
       axios
         .post(
-          "http://localhost:8080/jpa/" +
+          session.springbootBaseUrl +
             localStorage.getItem("quiz") +
             "/create-questions",
           {
@@ -170,7 +171,7 @@ class GenerateQuestions extends Component {
     console.log(questions_answers);
     axios
       .put(
-        "http://localhost:8080/jpa/" +
+        session.springbootBaseUrl +
           localStorage.getItem("quiz") +
           "/edit-quiz",
         {

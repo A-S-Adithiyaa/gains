@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
-;
+import session from "../../Variables";
 
 function TakeAssessment({ mcqQuestions }) {
   const [score, setScore] = useState(0);

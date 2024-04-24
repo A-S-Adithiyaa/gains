@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import session from "../../Variables";
 
 const History = () => {
     const [option,setOption]=useState("");
@@ -77,7 +78,7 @@ const History = () => {
             navigate("/login");
             }
 
-        fetch("http://localhost:8080/jpa/"+id+"/get-topics")
+        fetch(session.springbootBaseUrl+id+"/get-topics")
         .then(res=>{
             return res.json();
         })
@@ -165,7 +166,7 @@ const History = () => {
     const handleDelete= async ()=>{
         try {
             
-            const response = await fetch("http://localhost:8080/jpa/delete-topics", {
+            const response = await fetch(springbootBaseUrl+"delete-topics", {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'

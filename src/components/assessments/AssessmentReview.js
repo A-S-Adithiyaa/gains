@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Container, Row,Col } from "react-bootstrap";
 import { useParams } from "react-router-dom";
+import session from "../../Variables";
 const AssessmentReview = () => {
 
     let {qid}=useParams();
@@ -12,7 +13,7 @@ const AssessmentReview = () => {
     const [questions,setQuestions]=useState([]);
 
     useEffect(()=>{
-        axios.get("http://localhost:8080/jpa/"+localStorage.getItem("current_topic")+"/get-quiz/"+qid)
+        axios.get(session.springbootBaseUrl+localStorage.getItem("current_topic")+"/get-quiz/"+qid)
         .then(res=> res.data)
         .then(res=>{
             setCorrect(res.correctAnswers)
@@ -23,7 +24,7 @@ const AssessmentReview = () => {
         })
         .catch(err=>console.log(err))
 
-        axios.get("http://localhost:8080/jpa/"+qid+"/get-questions")
+        axios.get(session.springbootBaseUrl+qid+"/get-questions")
         .then(res=>{
             setQuestions(res.data)
             console.log(res.data)
