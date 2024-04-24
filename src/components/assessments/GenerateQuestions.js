@@ -80,7 +80,7 @@ class GenerateQuestions extends Component {
           localStorage.setItem("topic", response.data.title);
 
           fetch(
-            "http://localhost:8080/jpa/" + this.state.id + "/create-topics",
+            "http://localhost:8080/jpa/" + localStorage.getItem("isLoggedIn")+ "/create-topics",
             {
               method: "POST",
               headers: {
