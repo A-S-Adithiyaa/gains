@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { Navigate, useNavigate } from "react-router-dom";
+import session from "../../Variables";
 import Navbar from "../Navbar";
 // import "/home/manish/Projects/GAINS/gains/src/App.css";
 
@@ -48,7 +49,7 @@ function LoginPage() {
     setIsLoading(true);
 
     axios
-      .post("http://localhost:8080/jpa/login", formData)
+      .post(session.springbootBaseUrl + "login", formData)
       .then(function (response) {
         if (response.data[0] === "Authorized") {
           localStorage.setItem("isLoggedIn", response.data[1]);

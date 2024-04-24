@@ -64,7 +64,7 @@ class GenerateQuestions extends Component {
     const { input } = this.state;
     if (this.state.tid === null) {
       await axios
-        .post("http://10.100.50.225:5000/generate-title", {
+        .post(session.naqBaseAPIUrl + "generate-title", {
           context: input,
         })
         .then((response) => {
@@ -105,7 +105,7 @@ class GenerateQuestions extends Component {
 
   generateSumm = (tid, val) => {
     axios
-      .post("http://10.100.50.225:5000/generate_summary", {
+      .post(session.naqBaseAPIUrl + "generate_summary", {
         context: this.state.input,
       })
       .then((response) => {
