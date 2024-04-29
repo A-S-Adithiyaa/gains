@@ -518,8 +518,32 @@ def generate_qa():
 def generate_summary():
    data=request.get_json()
    context=data['context']  
-   print(summarizer(context, summary_model, summary_tokenizer))
-   summary=get_summary_in_points(summarizer(context, summary_model, summary_tokenizer))
+   paras=context.split("\n")
+   for i in paras:
+        if i=="":
+            paras.remove(i)
+   summary=[]
+   for para in paras:
+        print(para)
+        summ=get_summary_in_points(summarizer(para, summary_model, summary_tokenizer))
+        print(summ)
+        summary.extend(summ)
+   return jsonify(summary)
+   
+@app.route('/generate_notes', methods=['POST'])
+def generate_notes():
+   data=request.get_json()
+   context=data['context']  
+   paras=context.split("\n")
+   for i in paras:
+        if i=="":
+            paras.remove(i)
+   summary=[]
+   for para in paras:
+        print(para)
+        summ=[summarizer(para, summary_model, summary_tokenizer)]
+        print(summ)
+        summary.extend(summ)
    return jsonify(summary)
 
 @app.route('/generate-title', methods=['POST'])
